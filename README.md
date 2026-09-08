@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/tbrowder/App-RakuDocToPDF/actions/workflows/linux.yml/badge.svg)](https://github.com/tbrowder/App-RakuDocToPDF/actions) [![Actions Status](https://github.com/tbrowder/App-RakuDocToPDF/actions/workflows/macos.yml/badge.svg)](https://github.com/tbrowder/App-RakuDocToPDF/actions) [![Actions Status](https://github.com/tbrowder/App-RakuDocToPDF/actions/workflows/windows.yml/badge.svg)](https://github.com/tbrowder/App-RakuDocToPDF/actions)
+
 NAME
 ====
 
