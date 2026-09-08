@@ -1,0 +1,26 @@
+{
+  "api": 0,
+  "auth": "zef:tbrowder",
+  "authors": [
+    "Tom Browder"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "Provides routines to convert RakuDoc to PDF\n",
+  "license": "Artistic-2.0",
+  "name": "App::RakuDocToPDF",
+  "perl": "6.d",
+  "provides": {
+    "App::RakuDocToPDF": "lib/App/RakuDocToPDF.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "",
+  "tags": [
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
+}
