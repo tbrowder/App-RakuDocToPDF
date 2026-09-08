@@ -1,0 +1,26 @@
+=begin pod
+
+=head1 NAME
+
+B<sample> - Small RakuDoc file for App::RakuDocToPDF
+
+=head1 DESCRIPTION
+
+This is an ordinary paragraph. It is deliberately long enough to demonstrate
+basic line wrapping when rendered on a physical Letter or A4 page.
+
+=head2 A LIST
+
+=item First item for the initial renderer.
+
+=item Second item with C<inline code> shown as ordinary visible text.
+
+=head2 CODE
+
+=begin code :lang<raku>
+use App::RakuDocToPDF;
+
+rakudoc-to-pdf('README.rakudoc');
+=end code
+
+=end pod

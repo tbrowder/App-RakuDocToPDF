@@ -13,7 +13,11 @@
   "name": "App::RakuDocToPDF",
   "perl": "6.d",
   "provides": {
-    "App::RakuDocToPDF": "lib/App/RakuDocToPDF.rakumod"
+    "App::RakuDocToPDF": "lib/App/RakuDocToPDF.rakumod",
+    "App::RakuDocToPDF::Layout": "lib/App/RakuDocToPDF/Layout.rakumod",
+    "App::RakuDocToPDF::Media": "lib/App/RakuDocToPDF/Media.rakumod",
+    "App::RakuDocToPDF::Reader": "lib/App/RakuDocToPDF/Reader.rakumod",
+    "RakuDocToPDF": "lib/RakuDocToPDF.rakumod"
   },
   "resources": [
   ],

@@ -1,0 +1,57 @@
+#!/usr/bin/env raku
+use v6.d;
+
+use App::RakuDocToPDF;
+
+sub usage(--> Nil) {
+    say q:to/END/;
+Usage:
+    rakudoc2pdf INPUT.rakudoc [--output=FILE.pdf] [--media=Letter|A4]
+
+Examples:
+    rakudoc2pdf README.rakudoc
+    rakudoc2pdf README.rakudoc --output=README.pdf
+    rakudoc2pdf README.rakudoc --media=A4
+END
+}
+
+my Str $input = '';
+my Str $output = '';
+my Str $media = 'Letter';
+
+for @*ARGS -> $arg {
+    if $arg eq '--help' or $arg eq '-h' {
+        usage;
+        exit 0;
+    }
+    elsif $arg.starts-with('--output=') {
+        $output = $arg.substr('--output='.chars);
+    }
+    elsif $arg.starts-with('--media=') {
+        $media = $arg.substr('--media='.chars);
+    }
+    elsif $arg.starts-with('-') {
+        note "Unknown option '$arg'.";
+        usage;
+        exit 2;
+    }
+    elsif $input.chars {
+        note "Only one input file may be specified.";
+        usage;
+        exit 2;
+    }
+    else {
+        $input = $arg;
+    }
+}
+
+unless $input.chars {
+    usage;
+    exit 2;
+}
+
+my %args = :$media;
+%args<output> = $output if $output.chars;
+
+my IO::Path $pdf = rakudoc-to-pdf($input, |%args);
+say $pdf;
