@@ -5,6 +5,8 @@ NAME
 
 **App::RakuDocToPDF** - Provides routines to convert RakuDoc to PDF
 
+See an example at [click here](https://github.com/tbrowder/App-RakuDocToPDF/examples/pdf/README.pdf)
+
 SYNOPSIS
 ========
 
