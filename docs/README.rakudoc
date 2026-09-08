@@ -6,40 +6,211 @@ B<App::RakuDocToPDF> - Provides routines to convert RakuDoc to PDF
 
 =head1 SYNOPSIS
 
-=begin code :lang<raku>
+From the command line:
 
+=begin code
+
+rakudoc2pdf README.rakudoc
+
+rakudoc2pdf README.rakudoc --output=README.pdf
+
+rakudoc2pdf README.rakudoc --media=A4
+
+=end code
+
+From Raku:
+
+=begin code :lang<raku>
 use App::RakuDocToPDF;
 
-# use the provided script to convert RakuDoc to PDF
-rakudoc2pdf some.rakudoc
-# OUTPUT
-some.pdf
+my IO::Path $pdf = rakudoc-to-pdf(
+'README.rakudoc',
+:output<README.pdf>,
+:media<Letter>,
+);
 =end code
 
 =head1 DESCRIPTION
 
-B<App::RakuDocToPDF> provides a script (C<rakudoc2pdf>) to convert simple RakuDoc files to PDF.
-Execcute the program without an argument to see more information as shown here:
+B<App::RakuDocToPDF> converts simple RakuDoc files to paginated PDF documents.
+
+Its primary purpose is to produce a printable draft of a module's
+RakuDoc README for proofreading and handwritten editing. The generated
+document uses normal Letter or A4 pages rather than one continuously
+growing PDF page.
+
+The current version deliberately supports a useful subset of RakuDoc
+rather than attempting to be a complete RakuDoc publishing system.
+
+PDF pages use the standard PDF core fonts:
+
+=item Times-Roman for normal body text
+
+=item Helvetica Bold for headings
+
+=item Courier for code
+
+=item Helvetica for page footers
+
+Each page has a centered footer in the form:
 
 =begin code
-$ rakudoc2pdf
+Page M of N
+=end code
+
+where C<M> is the current page number and C<N> is the total number of
+pages.
+
+=head1 COMMAND LINE
+
+The distribution installs the C<rakudoc2pdf> program.
+
+Execute the program without an input file, or use C<--help> or C<-h>,
+to see its usage information:
+
+=begin code
+
 Usage:
-    rakudoc2pdf INPUT.rakudoc [--output=FILE.pdf] [--media=Letter|A4]
+rakudoc2pdf INPUT.rakudoc [--output=FILE.pdf] [--media=Letter|A4]
 
 Examples:
-    rakudoc2pdf README.rakudoc
-    rakudoc2pdf README.rakudoc --output=README.pdf
-    rakudoc2pdf README.rakudoc --media=A4
+rakudoc2pdf README.rakudoc
+rakudoc2pdf README.rakudoc --output=README.pdf
+rakudoc2pdf README.rakudoc --media=A4
+
 =end code
+
+Only one input file may be specified.
+
+=head1 OPTIONS
+
+=head2 C<--output=FILE.pdf>
+
+Specifies the output PDF file.
+
+For example:
+
+=begin code
+
+rakudoc2pdf README.rakudoc --output=draft.pdf
+
+=end code
+
+If C<--output> is omitted, the output file is created in the input
+file's directory using the input basename with the C<.rakudoc> suffix
+replaced by C<.pdf>.
+
+Thus:
+
+=begin code
+
+docs/README.rakudoc
+
+=end code
+
+produces:
+
+=begin code
+
+docs/README.pdf
+
+=end code
+
+=head2 C<--media=Letter|A4>
+
+Selects the PDF page media.
+
+The supported values are:
+
+=item C<Letter>
+
+=item C<A4>
+
+The default is C<Letter>.
+
+For example:
+
+=begin code
+
+rakudoc2pdf README.rakudoc --media=A4
+
+=end code
+
+=head2 C<--help>, C<-h>
+
+Displays command-line usage information and exits.
+
+=head1 LIBRARY INTERFACE
+
+The distribution exports the C<rakudoc-to-pdf> routine:
+
+=begin code :lang<raku>
+
+use App::RakuDocToPDF;
+
+my IO::Path $pdf = rakudoc-to-pdf(
+'README.rakudoc',
+:output<README.pdf>,
+:media<Letter>,
+);
+
+=end code
+
+The C<:output> argument is optional. If it is omitted, the output filename is derived from the input filename.
+
+The C<:media> argument is also optional and defaults to C<Letter>.
+
+The routine returns the C[IO::Path](IO::Path) of the generated PDF file.
+
+=head1 SUPPORTED RAKUDOC
+
+The current version is intended primarily for ordinary module README files.
+
+It recognizes and renders:
+
+=item headings written with C<=headN>
+
+=item ordinary paragraphs
+
+=item C<=item> entries
+
+=item C<=code> lines
+
+=item C<=begin code> and C<=end code> blocks
+
+=item the visible contents of common C<B<>>, C<I<>>, and C<C<>> inline formatting codes
+
+=item the visible label of a labeled C<L<>> link
+
+Text is wrapped to the available page width, and new PDF pages are created as needed.
+
+=head1 LIMITATIONS
+
+This is an intentionally lightweight renderer. It does not yet implement the complete RakuDoc specification.
+
+In particular:
+
+=item Inline C<B<>>, C<I<>>, and C<C<>> markup is currently rendered as ordinary visible text rather than with bold, italic, or code styling.
+
+=item Labeled links retain their visible label, but the generated PDF does not currently create active PDF hyperlinks.
+
+=item Unsupported RakuDoc block directives are currently ignored.
+
+=item Richer RakuDoc features such as tables and images are not currently rendered.
+
+=item The current output is intended primarily as a clean printable draft for proofreading rather than as publication-quality typesetting.
+
+These limitations may be reduced in later releases while retaining the simple draft-generation use case.
 
 =head1 AUTHOR
 
-Tom Browder <tbrowder@acm.org>
+Tom Browder [tbrowder@acm.org](mailto:tbrowder@acm.org)
 
 =head1 COPYRIGHT AND LICENSE
 
 © 2026 Tom Browder
 
-This library is free software; you may redistribute it or modify it under the Artistic License 2.0.
+This library is free software; you may redistribute it or modify it
+under the Artistic License 2.0.
 
 =end pod
