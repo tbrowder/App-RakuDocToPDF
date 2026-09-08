@@ -97,8 +97,8 @@ rakudoc2pdf README.rakudoc --output=draft.pdf
 =end code
 
 If C<--output> is omitted, the output file is created in the
-current working directory with the C<.rakudoc> suffix
-replaced by C<.pdf>.
+current working directory using the input file's basename, with the
+C<.rakudoc> suffix replaced by C<.pdf>.
 
 Thus:
 
@@ -112,7 +112,7 @@ produces:
 
 =begin code
 
-docs/README.pdf
+./README.pdf
 
 =end code
 
@@ -156,11 +156,13 @@ my IO::Path $pdf = rakudoc-to-pdf(
 
 =end code
 
-The C<:output> argument is optional. If it is omitted, the output filename is derived from the input filename.
+The C<:output> argument is optional. If it is omitted, the output filename
+is derived from the input file's basename and is written in the current
+working directory.
 
 The C<:media> argument is also optional and defaults to C<Letter>.
 
-The routine returns the C[IO::Path](IO::Path) of the generated PDF file.
+The routine returns the C<IO::Path> of the generated PDF file.
 
 =head1 SUPPORTED RAKUDOC
 
@@ -184,6 +186,16 @@ It recognizes and renders:
 
 Text is wrapped to the available page width, and new PDF pages are created as needed.
 
+=head1 REPRODUCIBLE OUTPUT
+
+The renderer is designed so that identical RakuDoc input and identical
+rendering options produce identical PDF bytes. Volatile PDF metadata, such
+as the current creation time, is not written. The PDF file identifier is
+derived deterministically from the input text and media choice.
+
+This makes generated README drafts suitable for checksum comparison and
+prevents a PDF from appearing to change when its rendered content has not.
+
 =head1 LIMITATIONS
 
 This is an intentionally lightweight renderer. It does not yet implement the complete RakuDoc specification.
@@ -204,7 +216,7 @@ These limitations may be reduced in later releases while retaining the simple dr
 
 =head1 AUTHOR
 
-Tom Browder [tbrowder@acm.org](mailto:tbrowder@acm.org)
+Tom Browder <tbrowder@acm.org>
 
 =head1 COPYRIGHT AND LICENSE
 

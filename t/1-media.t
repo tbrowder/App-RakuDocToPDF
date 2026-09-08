@@ -16,5 +16,3 @@ is media-height('A4'), 842, 'A4 height';
 is-deeply media-box('letter'), (0, 0, 612, 792), 'media name is case insensitive';
 dies-ok { media-box('Legal') }, 'unsupported media dies';
 
-done-testing;
-

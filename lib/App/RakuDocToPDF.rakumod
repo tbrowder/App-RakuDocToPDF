@@ -10,6 +10,35 @@ use App::RakuDocToPDF::Layout;
 use App::RakuDocToPDF::Media;
 use App::RakuDocToPDF::Reader;
 
+sub deterministic-pdf-id(
+    Str $text,
+    --> Str
+) {
+    my UInt $hash-one = 2166136261;
+    my UInt $hash-two = 1315423911;
+
+    for $text.encode.list -> $byte {
+        $hash-one = (($hash-one +^ $byte) * 16777619) +& 0xffffffff;
+        $hash-two = (($hash-two +^ $byte) * 2246822519) +& 0xffffffff;
+    }
+
+    my @values = (
+        $hash-one,
+        $hash-two,
+        $hash-one +^ 0xa5a5a5a5,
+        $hash-two +^ 0x5a5a5a5a,
+    );
+
+    my @bytes;
+    for @values -> $value {
+        for 0, 8, 16, 24 -> $shift {
+            @bytes.push: (($value +> $shift) +& 0xff);
+        }
+    }
+
+    return Buf.new(@bytes).decode('latin-1');
+}
+
 sub rakudoc-to-pdf(
     $input,
     :$output,
@@ -36,6 +65,7 @@ sub rakudoc-to-pdf(
     my Numeric $height = media-height($media);
 
     my PDF::API6 $pdf .= new;
+    $pdf.id = deterministic-pdf-id($source.slurp ~ "\0{$media.Str.lc}");
     my PDF::Content::FontObj $body-font = $pdf.core-font('Times-Roman');
     my PDF::Content::FontObj $heading-font = $pdf.core-font: :family<Helvetica>, :weight<bold>;
     my PDF::Content::FontObj $code-font = $pdf.core-font('Courier');
@@ -85,6 +115,6 @@ sub rakudoc-to-pdf(
         }
     }
 
-    $pdf.save-as: $destination.Str;
+    $pdf.save-as: $destination.Str, :!info;
     return $destination;
 }
