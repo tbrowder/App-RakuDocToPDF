@@ -4,7 +4,7 @@
 
 B<App::RakuDocToPDF> - Provides routines to convert RakuDoc to PDF
 
-See an example at L<click here | https://github.com/tbrowder/App-RakuDocToPDF/examples/pdf/README.pdf>
+See an example at L<click here | ./examples/pdf/README.pdf>
 =head1 SYNOPSIS
 
 From the command line:
