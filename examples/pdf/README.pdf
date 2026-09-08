@@ -1,0 +1,1026 @@
+%PDF-1.4
+%¥±ë¼
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+
+2 0 obj
+<<
+  /Type /Pages
+  /Count 6
+  /Kids [ 3 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R ]
+>>
+endobj
+
+3 0 obj
+<<
+  /Type /Page
+  /Contents 4 0 R
+  /MediaBox [ 0 0 612 792 ]
+  /Parent 2 0 R
+  /Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 7 0 R /F4 8 0 R >> >>
+>>
+endobj
+
+4 0 obj
+<< /Length 3193 >> stream
+BT
+  /F1 18 Tf
+  1 0 0 1 45 756 Tm
+  (DESCRIPTION) Tj
+  19.8 TL
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 729 Tm
+  (App::FontSample creates PDF font specimens, font comparisons, compact font collections, and character charts.) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 708 Tm
+  (App::FontSample does not provide a font collection. Library callers supply one or more PDF::Content::FontObj objects.) Tj
+  T*
+  1 0 0 1 45 694 Tm
+  (The installed font-sample program can load an OTF or TTF file directly.) Tj
+  T*
+  1 0 0 1 45 673 Tm
+  (The current release supports Letter and A4 paper, portrait and landscape orientation, configurable margins, JSON job) Tj
+  T*
+  1 0 0 1 45 659 Tm
+  (files, registered language pangrams, and four layouts \(click each link to view on GitHub\):) Tj
+  T*
+  1 0 0 1 63 638 Tm
+  (- speciman) Tj
+  T*
+  1 0 0 1 63 620 Tm
+  (- comparison) Tj
+  T*
+  1 0 0 1 63 602 Tm
+  (- collection) Tj
+  T*
+  1 0 0 1 63 584 Tm
+  (- characters) Tj
+  T*
+  /F1 18 Tf
+  1 0 0 1 45 556 Tm
+  (INSTALLATION) Tj
+  19.8 TL
+  T*
+  /F3 9 Tf
+  1 0 0 1 63 529 Tm
+  (zef install App::FontSample) Tj
+  9.9 TL
+  T*
+  /F1 18 Tf
+  1 0 0 1 45 502 Tm
+  (FIRST SAMPLE) Tj
+  19.8 TL
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 475 Tm
+  (The easiest first test uses the standard PDF core font Times-Roman, so no external font file is required.) Tj
+  12.1 TL
+  T*
+  /F3 9 Tf
+  1 0 0 1 63 454 Tm
+  (use PDF::API6;) Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 443 Tm
+  (use App::FontSample;) Tj
+  T*
+  1 0 0 1 63 432 Tm
+  [ ] TJ
+  T*
+  1 0 0 1 63 421 Tm
+  (my $pdf = PDF::API6.new;) Tj
+  T*
+  1 0 0 1 63 410 Tm
+  (my $font = $pdf.core-font: :family<Times-Roman>;) Tj
+  T*
+  1 0 0 1 63 399 Tm
+  [ ] TJ
+  T*
+  1 0 0 1 63 388 Tm
+  (create-font-sample\() Tj
+  T*
+  1 0 0 1 63 377 Tm
+  ($font,) Tj
+  T*
+  1 0 0 1 63 366 Tm
+  (:name<Times-Roman>,) Tj
+  T*
+  1 0 0 1 63 355 Tm
+  (:title<Font Specimen>,) Tj
+  T*
+  1 0 0 1 63 344 Tm
+  (:language<en>,) Tj
+  T*
+  1 0 0 1 63 333 Tm
+  (:output<sample.pdf>,) Tj
+  T*
+  1 0 0 1 63 322 Tm
+  (\);) Tj
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 305 Tm
+  (The specimen identifies the font, labels the alphabet and punctuation sizes, labels the pangram as English \(en\), and) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 291 Tm
+  (includes a size waterfall with each point size shown at the left.) Tj
+  T*
+  /F1 18 Tf
+  1 0 0 1 45 260 Tm
+  (CURRENT LAYOUTS) Tj
+  19.8 TL
+  T*
+  /F1 15 Tf
+  1 0 0 1 45 226 Tm
+  (specimen) Tj
+  16.5 TL
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 202 Tm
+  (The specimen layout produces one specimen page per font. It shows the font name, alphabet, numerals and punctuation,) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 188 Tm
+  (a labeled language pangram, and a size waterfall.) Tj
+  T*
+  /F3 9 Tf
+  1 0 0 1 63 167 Tm
+  (create-font-sample\() Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 156 Tm
+  ($font,) Tj
+  T*
+  1 0 0 1 63 145 Tm
+  (:name<Times-Roman>,) Tj
+  T*
+  1 0 0 1 63 134 Tm
+  (:layout<specimen>,) Tj
+  T*
+  1 0 0 1 63 123 Tm
+  (:title<Font Specimen>,) Tj
+  T*
+  1 0 0 1 63 112 Tm
+  (:language<en>,) Tj
+  T*
+  1 0 0 1 63 101 Tm
+  (:output<specimen.pdf>,) Tj
+  T*
+  1 0 0 1 63 90 Tm
+  (\);) Tj
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 73 Tm
+  (See an example at click here .) Tj
+  12.1 TL
+  T*
+  /F4 9 Tf
+  1 0 0 1 282.9825 24 Tm
+  (Page 1 of 6) Tj
+  9.9 TL
+  T*
+ET
+endstream
+endobj
+
+5 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Helvetica-Bold
+  /Encoding /WinAnsiEncoding
+>>
+endobj
+
+6 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+  /Encoding /WinAnsiEncoding
+>>
+endobj
+
+7 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+  /Encoding /WinAnsiEncoding
+>>
+endobj
+
+8 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Helvetica
+  /Encoding /WinAnsiEncoding
+>>
+endobj
+
+9 0 obj
+<<
+  /Type /Page
+  /Contents 10 0 R
+  /MediaBox [ 0 0 612 792 ]
+  /Parent 2 0 R
+  /Resources << /Font << /F1 6 0 R /F2 7 0 R /F3 5 0 R /F4 8 0 R >> >>
+>>
+endobj
+
+10 0 obj
+<< /Length 3578 >> stream
+BT
+  /F1 11 Tf
+  1 0 0 1 45 756 Tm
+  (An explicit pangram must also identify its language so the PDF can label it:) Tj
+  12.1 TL
+  T*
+  /F2 9 Tf
+  1 0 0 1 63 735 Tm
+  (create-font-sample\() Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 724 Tm
+  ($font,) Tj
+  T*
+  1 0 0 1 63 713 Tm
+  (:name<Times-Roman>,) Tj
+  T*
+  1 0 0 1 63 702 Tm
+  (:layout<specimen>,) Tj
+  T*
+  1 0 0 1 63 691 Tm
+  (:language<en>,) Tj
+  T*
+  1 0 0 1 63 680 Tm
+  (:pangram\('Pack my box with five dozen liquor jugs.'\),) Tj
+  T*
+  1 0 0 1 63 669 Tm
+  (:output<specimen-custom.pdf>,) Tj
+  T*
+  1 0 0 1 63 658 Tm
+  (\);) Tj
+  T*
+  /F3 15 Tf
+  1 0 0 1 45 634 Tm
+  (NOTE) Tj
+  16.5 TL
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 610 Tm
+  (The collection and comparison sections below render each font at the same nominal point size. Visible character heights) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 596 Tm
+  (may differ because each typeface has its own font metrics.) Tj
+  T*
+  /F3 15 Tf
+  1 0 0 1 45 568 Tm
+  (comparison) Tj
+  16.5 TL
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 544 Tm
+  (The comparison layout displays the same text in several fonts at one stated point size. The font name is shown above) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 530 Tm
+  (each sample. The layout continues onto additional pages when needed.) Tj
+  T*
+  /F2 9 Tf
+  1 0 0 1 63 509 Tm
+  (create-font-comparison-sample\() Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 498 Tm
+  (@entries,) Tj
+  T*
+  1 0 0 1 63 487 Tm
+  (:layout<comparison>,) Tj
+  T*
+  1 0 0 1 63 476 Tm
+  (:title<Font Comparison>,) Tj
+  T*
+  1 0 0 1 63 465 Tm
+  (:comparison-size\(18\),) Tj
+  T*
+  1 0 0 1 63 454 Tm
+  (:text\() Tj
+  T*
+  1 0 0 1 63 443 Tm
+  ('The quick brown fox jumps over the lazy dog. 0123456789') Tj
+  T*
+  1 0 0 1 63 432 Tm
+  (\),) Tj
+  T*
+  1 0 0 1 63 421 Tm
+  (:output<comparison.pdf>,) Tj
+  T*
+  1 0 0 1 63 410 Tm
+  (\);) Tj
+  T*
+  /F3 15 Tf
+  1 0 0 1 45 386 Tm
+  (collection) Tj
+  16.5 TL
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 362 Tm
+  (The collection layout is a compact one-page inventory of fonts. Each font name is followed by a short typographic) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 348 Tm
+  (identification string. The page title states the sample point size.) Tj
+  T*
+  /F2 9 Tf
+  1 0 0 1 63 327 Tm
+  (create-font-collection-sample\() Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 316 Tm
+  (@entries,) Tj
+  T*
+  1 0 0 1 63 305 Tm
+  (:layout<collection>,) Tj
+  T*
+  1 0 0 1 63 294 Tm
+  (:title<Font Collection>,) Tj
+  T*
+  1 0 0 1 63 283 Tm
+  (:sample-size\(14\),) Tj
+  T*
+  1 0 0 1 63 272 Tm
+  (:text\('Aa Bb Cc Dd Ee Ff Gg 0123456789'\),) Tj
+  T*
+  1 0 0 1 63 261 Tm
+  (:output<collection.pdf>,) Tj
+  T*
+  1 0 0 1 63 250 Tm
+  (\);) Tj
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 233 Tm
+  (If the requested collection cannot fit within the page margins, the layout reports an error rather than overflowing the) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 219 Tm
+  (page.) Tj
+  T*
+  /F3 15 Tf
+  1 0 0 1 45 191 Tm
+  (characters) Tj
+  16.5 TL
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 167 Tm
+  (The characters layout displays selected characters in a grid. The page heading identifies the font and glyph point size,) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 153 Tm
+  (and each cell labels the glyph with its Unicode code point.) Tj
+  T*
+  /F2 9 Tf
+  1 0 0 1 63 132 Tm
+  (create-font-sample\() Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 121 Tm
+  ($font,) Tj
+  T*
+  1 0 0 1 63 110 Tm
+  (:name<Times-Roman>,) Tj
+  T*
+  1 0 0 1 63 99 Tm
+  (:layout<characters>,) Tj
+  T*
+  1 0 0 1 63 88 Tm
+  (:title<Character Sample>,) Tj
+  T*
+  1 0 0 1 63 77 Tm
+  (:characters\() Tj
+  T*
+  1 0 0 1 63 66 Tm
+  ('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') Tj
+  T*
+  /F4 9 Tf
+  1 0 0 1 282.9825 24 Tm
+  (Page 2 of 6) Tj
+  T*
+ET
+endstream
+endobj
+
+11 0 obj
+<<
+  /Type /Page
+  /Contents 12 0 R
+  /MediaBox [ 0 0 612 792 ]
+  /Parent 2 0 R
+  /Resources << /Font << /F1 7 0 R /F2 6 0 R /F3 5 0 R /F4 8 0 R >> >>
+>>
+endobj
+
+12 0 obj
+<< /Length 3106 >> stream
+BT
+  /F1 9 Tf
+  1 0 0 1 63 756 Tm
+  (\),) Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 745 Tm
+  (:columns\(8\),) Tj
+  T*
+  1 0 0 1 63 734 Tm
+  (:glyph-size\(30\),) Tj
+  T*
+  1 0 0 1 63 723 Tm
+  (:output<characters.pdf>,) Tj
+  T*
+  1 0 0 1 63 712 Tm
+  (\);) Tj
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 695 Tm
+  (Library callers may supply characters as a string or as a positional collection containing one-character strings, integer) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 681 Tm
+  (Unicode code points, or strings such as U+0041.) Tj
+  T*
+  /F3 18 Tf
+  1 0 0 1 45 650 Tm
+  (FONT COLLECTIONS) Tj
+  19.8 TL
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 623 Tm
+  (A comparison or collection uses App::FontSample::FontEntry objects.) Tj
+  12.1 TL
+  T*
+  /F1 9 Tf
+  1 0 0 1 63 602 Tm
+  (use App::FontSample;) Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 591 Tm
+  (use App::FontSample::FontEntry;) Tj
+  T*
+  1 0 0 1 63 580 Tm
+  [ ] TJ
+  T*
+  1 0 0 1 63 569 Tm
+  (my @entries;) Tj
+  T*
+  1 0 0 1 63 558 Tm
+  [ ] TJ
+  T*
+  1 0 0 1 63 547 Tm
+  (@entries.push: App::FontSample::FontEntry.new\() Tj
+  T*
+  1 0 0 1 63 536 Tm
+  (:name<Times-Roman>,) Tj
+  T*
+  1 0 0 1 63 525 Tm
+  (:font\($times\),) Tj
+  T*
+  1 0 0 1 63 514 Tm
+  (\);) Tj
+  T*
+  1 0 0 1 63 503 Tm
+  [ ] TJ
+  T*
+  1 0 0 1 63 492 Tm
+  (@entries.push: App::FontSample::FontEntry.new\() Tj
+  T*
+  1 0 0 1 63 481 Tm
+  (:name<Helvetica>,) Tj
+  T*
+  1 0 0 1 63 470 Tm
+  (:font\($helvetica\),) Tj
+  T*
+  1 0 0 1 63 459 Tm
+  (\);) Tj
+  T*
+  1 0 0 1 63 448 Tm
+  [ ] TJ
+  T*
+  1 0 0 1 63 437 Tm
+  (create-font-collection-sample\() Tj
+  T*
+  1 0 0 1 63 426 Tm
+  (@entries,) Tj
+  T*
+  1 0 0 1 63 415 Tm
+  (:layout<comparison>,) Tj
+  T*
+  1 0 0 1 63 404 Tm
+  (:comparison-size\(18\),) Tj
+  T*
+  1 0 0 1 63 393 Tm
+  (:output<comparison.pdf>,) Tj
+  T*
+  1 0 0 1 63 382 Tm
+  (\);) Tj
+  T*
+  /F3 18 Tf
+  1 0 0 1 45 355 Tm
+  (PAPER AND PAGE OPTIONS) Tj
+  19.8 TL
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 328 Tm
+  (Both Letter and A4 are supported. Pages may be portrait or landscape, and the margin may be set in PDF points.) Tj
+  12.1 TL
+  T*
+  /F1 9 Tf
+  1 0 0 1 63 307 Tm
+  (create-font-sample\() Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 296 Tm
+  ($font,) Tj
+  T*
+  1 0 0 1 63 285 Tm
+  (:name<Times-Roman>,) Tj
+  T*
+  1 0 0 1 63 274 Tm
+  (:paper<A4>,) Tj
+  T*
+  1 0 0 1 63 263 Tm
+  (:landscape,) Tj
+  T*
+  1 0 0 1 63 252 Tm
+  (:margin\(36\),) Tj
+  T*
+  1 0 0 1 63 241 Tm
+  (:language<en>,) Tj
+  T*
+  1 0 0 1 63 230 Tm
+  (:output<a4-landscape.pdf>,) Tj
+  T*
+  1 0 0 1 63 219 Tm
+  (\);) Tj
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 202 Tm
+  (There are 72 PDF points in one inch.) Tj
+  12.1 TL
+  T*
+  /F3 18 Tf
+  1 0 0 1 45 171 Tm
+  (LANGUAGE PANGRAMS) Tj
+  19.8 TL
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 144 Tm
+  (The current built-in pangram registry includes English under the two-letter code en.) Tj
+  12.1 TL
+  T*
+  /F1 9 Tf
+  1 0 0 1 63 123 Tm
+  (create-font-sample\() Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 112 Tm
+  ($font,) Tj
+  T*
+  1 0 0 1 63 101 Tm
+  (:name<Times-Roman>,) Tj
+  T*
+  1 0 0 1 63 90 Tm
+  (:language<en>,) Tj
+  T*
+  1 0 0 1 63 79 Tm
+  (:output<english.pdf>,) Tj
+  T*
+  1 0 0 1 63 68 Tm
+  (\);) Tj
+  T*
+  /F4 9 Tf
+  1 0 0 1 282.9825 24 Tm
+  (Page 3 of 6) Tj
+  T*
+ET
+endstream
+endobj
+
+13 0 obj
+<<
+  /Type /Page
+  /Contents 14 0 R
+  /MediaBox [ 0 0 612 792 ]
+  /Parent 2 0 R
+  /Resources << /Font << /F1 6 0 R /F2 7 0 R /F3 5 0 R /F4 8 0 R >> >>
+>>
+endobj
+
+14 0 obj
+<< /Length 3081 >> stream
+BT
+  /F1 11 Tf
+  1 0 0 1 45 756 Tm
+  (The resulting specimen labels the text English \(en\) pangram.) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 735 Tm
+  (List the currently registered language codes with:) Tj
+  T*
+  /F2 9 Tf
+  1 0 0 1 63 714 Tm
+  (font-sample --languages) Tj
+  9.9 TL
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 697 Tm
+  (Applications may register additional pangrams and language names at runtime.) Tj
+  12.1 TL
+  T*
+  /F3 18 Tf
+  1 0 0 1 45 666 Tm
+  (OTF AND TTF FILES) Tj
+  19.8 TL
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 639 Tm
+  (The installed font-sample program loads an OTF or TTF file directly:) Tj
+  12.1 TL
+  T*
+  /F2 9 Tf
+  1 0 0 1 63 618 Tm
+  (font-sample \\) Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 607 Tm
+  (--font=/path/to/font.otf \\) Tj
+  T*
+  1 0 0 1 63 596 Tm
+  (--output=sample.pdf \\) Tj
+  T*
+  1 0 0 1 63 585 Tm
+  (--layout=specimen \\) Tj
+  T*
+  1 0 0 1 63 574 Tm
+  (--language=en) Tj
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 557 Tm
+  (Current direct-mode layout names are:) Tj
+  12.1 TL
+  T*
+  /F2 9 Tf
+  1 0 0 1 63 536 Tm
+  (specimen) Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 525 Tm
+  (comparison) Tj
+  T*
+  1 0 0 1 63 514 Tm
+  (collection) Tj
+  T*
+  1 0 0 1 63 503 Tm
+  (characters) Tj
+  T*
+  /F3 18 Tf
+  1 0 0 1 45 476 Tm
+  (JSON INPUT) Tj
+  19.8 TL
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 449 Tm
+  (font-sample can read one or more jobs from a JSON definition file:) Tj
+  12.1 TL
+  T*
+  /F2 9 Tf
+  1 0 0 1 63 428 Tm
+  (font-sample --config=font-samples.json) Tj
+  9.9 TL
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 411 Tm
+  (For example:) Tj
+  12.1 TL
+  T*
+  /F2 9 Tf
+  1 0 0 1 63 390 Tm
+  ({) Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 379 Tm
+  ("output": "output/sample.pdf",) Tj
+  T*
+  1 0 0 1 63 368 Tm
+  ("layout": "specimen",) Tj
+  T*
+  1 0 0 1 63 357 Tm
+  ("language": "en",) Tj
+  T*
+  1 0 0 1 63 346 Tm
+  ("fonts": [) Tj
+  T*
+  1 0 0 1 63 335 Tm
+  ({) Tj
+  T*
+  1 0 0 1 63 324 Tm
+  ("file": "fonts/MyFont.otf",) Tj
+  T*
+  1 0 0 1 63 313 Tm
+  ("name": "My Font") Tj
+  T*
+  1 0 0 1 63 302 Tm
+  (}) Tj
+  T*
+  1 0 0 1 63 291 Tm
+  (]) Tj
+  T*
+  1 0 0 1 63 280 Tm
+  (}) Tj
+  T*
+  /F3 18 Tf
+  1 0 0 1 45 253 Tm
+  (REPRODUCIBLE PDF OUTPUT) Tj
+  19.8 TL
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 226 Tm
+  (For generated examples or other PDFs that should be byte-for-byte reproducible, use :reproducible from Raku or) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 212 Tm
+  (--reproducible in direct command-line mode. JSON jobs may use "reproducible": true. Normal PDF generation retains) Tj
+  T*
+  1 0 0 1 45 198 Tm
+  (the default unique document identification and metadata behavior.) Tj
+  T*
+  /F3 18 Tf
+  1 0 0 1 45 167 Tm
+  (OPTIONAL NOTOFONTS-OT USE) Tj
+  19.8 TL
+  T*
+  /F1 11 Tf
+  1 0 0 1 45 140 Tm
+  (NotoFonts-OT is not a dependency of App::FontSample. It is one optional source of PDF::Content::FontObj objects.) Tj
+  12.1 TL
+  T*
+  /F2 9 Tf
+  1 0 0 1 63 119 Tm
+  (use NotoFonts-OT;) Tj
+  9.9 TL
+  T*
+  1 0 0 1 63 108 Tm
+  (use App::FontSample;) Tj
+  T*
+  1 0 0 1 63 97 Tm
+  (use App::FontSample::FontEntry;) Tj
+  T*
+  1 0 0 1 63 86 Tm
+  [ ] TJ
+  T*
+  1 0 0 1 63 75 Tm
+  (my @entries;) Tj
+  T*
+  /F4 9 Tf
+  1 0 0 1 282.9825 24 Tm
+  (Page 4 of 6) Tj
+  T*
+ET
+endstream
+endobj
+
+15 0 obj
+<<
+  /Type /Page
+  /Contents 16 0 R
+  /MediaBox [ 0 0 612 792 ]
+  /Parent 2 0 R
+  /Resources << /Font << /F1 7 0 R /F2 5 0 R /F3 6 0 R /F4 8 0 R >> >>
+>>
+endobj
+
+16 0 obj
+<< /Length 2687 >> stream
+BT
+  /F1 9 Tf
+  1 0 0 1 63 756 Tm
+  [ ] TJ
+  9.9 TL
+  T*
+  1 0 0 1 63 745 Tm
+  (for <) Tj
+  T*
+  1 0 0 1 63 734 Tm
+  (NotoSerif-Regular) Tj
+  T*
+  1 0 0 1 63 723 Tm
+  (NotoSerif-Bold) Tj
+  T*
+  1 0 0 1 63 712 Tm
+  (NotoSans-Regular) Tj
+  T*
+  1 0 0 1 63 701 Tm
+  (NotoSans-Bold) Tj
+  T*
+  1 0 0 1 63 690 Tm
+  (> -> $code {) Tj
+  T*
+  1 0 0 1 63 679 Tm
+  (my $font = get-loaded-font\($code\);) Tj
+  T*
+  1 0 0 1 63 668 Tm
+  [ ] TJ
+  T*
+  1 0 0 1 63 657 Tm
+  (@entries.push: App::FontSample::FontEntry.new\() Tj
+  T*
+  1 0 0 1 63 646 Tm
+  (:name\($code\),) Tj
+  T*
+  1 0 0 1 63 635 Tm
+  (:$font,) Tj
+  T*
+  1 0 0 1 63 624 Tm
+  (\);) Tj
+  T*
+  1 0 0 1 63 613 Tm
+  (}) Tj
+  T*
+  1 0 0 1 63 602 Tm
+  [ ] TJ
+  T*
+  1 0 0 1 63 591 Tm
+  (create-font-collection-sample\() Tj
+  T*
+  1 0 0 1 63 580 Tm
+  (@entries,) Tj
+  T*
+  1 0 0 1 63 569 Tm
+  (:layout<comparison>,) Tj
+  T*
+  1 0 0 1 63 558 Tm
+  (:comparison-size\(18\),) Tj
+  T*
+  1 0 0 1 63 547 Tm
+  (:output<noto-comparison.pdf>,) Tj
+  T*
+  1 0 0 1 63 536 Tm
+  (\);) Tj
+  T*
+  /F2 18 Tf
+  1 0 0 1 45 509 Tm
+  (EXAMPLES) Tj
+  19.8 TL
+  T*
+  /F3 11 Tf
+  1 0 0 1 45 482 Tm
+  (examples/current-capabilities.raku uses PDF core fonts and creates four PDFs, one for each current layout:) Tj
+  12.1 TL
+  T*
+  1 0 0 1 63 461 Tm
+  (- example-specimen.pdf) Tj
+  T*
+  1 0 0 1 63 443 Tm
+  (- example-comparison.pdf) Tj
+  T*
+  1 0 0 1 63 425 Tm
+  (- example-collection.pdf) Tj
+  T*
+  1 0 0 1 63 407 Tm
+  (- example-characters.pdf) Tj
+  T*
+  1 0 0 1 45 389 Tm
+  (Run the examples like this:) Tj
+  T*
+  /F1 9 Tf
+  1 0 0 1 63 368 Tm
+  (raku -Ilib examples/current-capabilities.raku) Tj
+  9.9 TL
+  T*
+  /F2 18 Tf
+  1 0 0 1 45 341 Tm
+  (TESTING) Tj
+  19.8 TL
+  T*
+  /F3 11 Tf
+  1 0 0 1 45 314 Tm
+  (Run the normal test suite with mi6 test \(for modules under App::Mi6 management\) or zef ..) Tj
+  12.1 TL
+  T*
+  /F1 9 Tf
+  1 0 0 1 63 293 Tm
+  (mi6 test) Tj
+  9.9 TL
+  T*
+  /F3 11 Tf
+  1 0 0 1 45 276 Tm
+  (The normal test suite does not require NotoFonts-OT.) Tj
+  12.1 TL
+  T*
+  /F2 18 Tf
+  1 0 0 1 45 245 Tm
+  (FUTURE WORK) Tj
+  19.8 TL
+  T*
+  /F3 11 Tf
+  1 0 0 1 45 218 Tm
+  (This README describes current capability only. Planned additions and changes are maintained in) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 204 Tm
+  (docs/TODO.rakudoc.) Tj
+  T*
+  /F2 18 Tf
+  1 0 0 1 45 173 Tm
+  (SOURCE) Tj
+  19.8 TL
+  T*
+  /F3 11 Tf
+  1 0 0 1 45 146 Tm
+  (The project source is maintained in the tbrowder/App-FontSample repository on GitHub.) Tj
+  12.1 TL
+  T*
+  /F2 18 Tf
+  1 0 0 1 45 115 Tm
+  (AUTHOR) Tj
+  19.8 TL
+  T*
+  /F3 11 Tf
+  1 0 0 1 45 88 Tm
+  (Tom Browder <tbrowder@acm.org>) Tj
+  12.1 TL
+  T*
+  /F4 9 Tf
+  1 0 0 1 282.9825 24 Tm
+  (Page 5 of 6) Tj
+  9.9 TL
+  T*
+ET
+endstream
+endobj
+
+17 0 obj
+<<
+  /Type /Page
+  /Contents 18 0 R
+  /MediaBox [ 0 0 612 792 ]
+  /Parent 2 0 R
+  /Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 8 0 R >> >>
+>>
+endobj
+
+18 0 obj
+<< /Length 355 >> stream
+BT
+  /F1 18 Tf
+  1 0 0 1 45 756 Tm
+  (COPYRIGHT AND LICENSE) Tj
+  19.8 TL
+  T*
+  /F2 11 Tf
+  1 0 0 1 45 729 Tm
+  (© 2026 Tom Browder) Tj
+  12.1 TL
+  T*
+  1 0 0 1 45 708 Tm
+  (This library is free software; you may redistribute it or modify it under the Artistic License 2.0.) Tj
+  T*
+  /F3 9 Tf
+  1 0 0 1 282.9825 24 Tm
+  (Page 6 of 6) Tj
+  9.9 TL
+  T*
+ET
+endstream
+endobj
+
+xref
+0 19
+0000000000 65535 f 
+0000000015 00000 n 
+0000000065 00000 n 
+0000000165 00000 n 
+0000000334 00000 n 
+0000003580 00000 n 
+0000003691 00000 n 
+0000003799 00000 n 
+0000003903 00000 n 
+0000004009 00000 n 
+0000004179 00000 n 
+0000007811 00000 n 
+0000007982 00000 n 
+0000011142 00000 n 
+0000011313 00000 n 
+0000014448 00000 n 
+0000014619 00000 n 
+0000017360 00000 n 
+0000017521 00000 n 
+trailer
+<< /ID [ (Mžâº»xKè;Gá"F) (Mžâº»xKè;Gá"F) ] /Root 1 0 R /Size 19 >>
+startxref
+17929
+%%EOF
