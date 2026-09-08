@@ -82,7 +82,7 @@ For example:
 
     rakudoc2pdf README.rakudoc --output=draft.pdf
 
-If `--output` is omitted, the output file is created in the input file's directory using the input basename with the `.rakudoc` suffix replaced by `.pdf`.
+If `--output` is omitted, the output file is created in the current working directory with the `.rakudoc` suffix replaced by `.pdf`.
 
 Thus:
 

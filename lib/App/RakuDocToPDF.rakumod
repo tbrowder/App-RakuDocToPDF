@@ -28,7 +28,7 @@ sub rakudoc-to-pdf(
         if $basename.ends-with('.rakudoc') {
             $basename = $basename.substr(0, $basename.chars - 8);
         }
-        $destination = $source.parent.add("$basename.pdf");
+        $destination = "$basename.pdf".IO;
     }
 
     my @box = media-box($media);
@@ -88,4 +88,3 @@ sub rakudoc-to-pdf(
     $pdf.save-as: $destination.Str;
     return $destination;
 }
-

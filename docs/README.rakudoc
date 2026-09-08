@@ -96,8 +96,8 @@ rakudoc2pdf README.rakudoc --output=draft.pdf
 
 =end code
 
-If C<--output> is omitted, the output file is created in the input
-file's directory using the input basename with the C<.rakudoc> suffix
+If C<--output> is omitted, the output file is created in the
+current working directory with the C<.rakudoc> suffix
 replaced by C<.pdf>.
 
 Thus:
