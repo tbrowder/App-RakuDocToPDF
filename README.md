@@ -10,12 +10,26 @@ SYNOPSIS
 
 ```raku
 use App::RakuDocToPDF;
+
+# use the provided script to convert RakuDoc to PDF
+rakudoc2pdf some.rakudoc
+# OUTPUT
+some.pdf
 ```
 
 DESCRIPTION
 ===========
 
-**App::RakuDocToPDF** is ...
+**App::RakuDocToPDF** provides a script (`rakudoc2pdf`) to convert simple RakuDoc files to PDF. Execcute the program without an argument to see more information as shown here:
+
+    $ rakudoc2pdf
+    Usage:
+        rakudoc2pdf INPUT.rakudoc [--output=FILE.pdf] [--media=Letter|A4]
+
+    Examples:
+        rakudoc2pdf README.rakudoc
+        rakudoc2pdf README.rakudoc --output=README.pdf
+        rakudoc2pdf README.rakudoc --media=A4
 
 AUTHOR
 ======
