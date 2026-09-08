@@ -7,6 +7,9 @@
   "build-depends": [
   ],
   "depends": [
+    "PDF::API6",
+    "PDF::Content::FontObj",
+    "PDF::Page"
   ],
   "description": "Provides routines to convert RakuDoc to PDF\n",
   "license": "Artistic-2.0",
