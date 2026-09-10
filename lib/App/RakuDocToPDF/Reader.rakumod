@@ -117,6 +117,32 @@ sub read-rakudoc(
             next;
         }
 
+        if $line ~~ /^ '=slide' \s* $/ {
+            flush-paragraph();
+            add-block('slide');
+            next;
+        }
+
+        if $line ~~ /^ '=TITLE' \s+ (.*) $/ {
+            flush-paragraph();
+            add-block(
+                'title',
+                :depth(0),
+                :text(plain-text(~$0)),
+            );
+            next;
+        }
+
+        if $line ~~ /^ '=SUBTITLE' \s+ (.*) $/ {
+            flush-paragraph();
+            add-block(
+                'subtitle',
+                :depth(0),
+                :text(plain-text(~$0)),
+            );
+            next;
+        }
+
         if $line ~~ /^ '=begin' \s+ 'pod' \s* $/
             or $line ~~ /^ '=end' \s+ 'pod' \s* $/ {
             next;

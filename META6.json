@@ -17,6 +17,7 @@
   "perl": "6.d",
   "provides": {
     "App::RakuDocToPDF": "lib/App/RakuDocToPDF.rakumod",
+    "App::RakuDocToPDF::DocumentType": "lib/App/RakuDocToPDF/DocumentType.rakumod",
     "App::RakuDocToPDF::Layout": "lib/App/RakuDocToPDF/Layout.rakumod",
     "App::RakuDocToPDF::Media": "lib/App/RakuDocToPDF/Media.rakumod",
     "App::RakuDocToPDF::Reader": "lib/App/RakuDocToPDF/Reader.rakumod"
@@ -25,6 +26,7 @@
   ],
   "source-url": "https://github.com/tbrowder/App-RakuDocToPDF.git",
   "tags": [
+    " PDF Rakudoc convert "
   ],
   "test-depends": [
   ],
