@@ -2,6 +2,8 @@ use Test;
 
 my @modules = <
     App::RakuDocToPDF
+    App::RakuDocToPDF::Layout
+    App::RakuDocToPDF::Reader
 >;
 
 plan @modules.elems;
