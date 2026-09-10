@@ -44,50 +44,8 @@ my @pages = layout-pages(
     :page-height(792),
 );
 
-my $found-before = False;
-my $found-after  = False;
-
-for @pages.kv -> $page-number, @page {
-    for @page -> %line {
-        if %line<text> eq 'Before the break.' {
-            $found-before = $page-number == 0;
-        }
-
-        if %line<text> eq 'After the break.' {
-            $found-after = $page-number == 1;
-        }
-    }
-}
-
-ok $found-before,
-    'text before page break is on first page';
-
-ok $found-after,
-'text after page break is on second page';
-
-
-done-testing;
-=finish
-
-my Bool $first-found = False;
-my Bool $second-found = False;
-
-for @pages[0] -> %line {
-    if %line<text> eq 'FIRST' {
-        $first-found = True;
-        last;
-    }
-}
-
-for @pages[1] -> %line {
-    if %line<text> eq 'SECOND' {
-        $second-found = True;
-        last;
-    }
-}
-
 is @pages.elems, 2, '=page-break starts a new page';
-ok $first-found, 'first heading is on page one';
-ok $second-found, 'second heading is on page two';
+is @pages[0][0]<text>, 'FIRST', 'first heading is on page one';
+is @pages[1][0]<text>, 'SECOND', 'second heading is on page two';
 
 done-testing;

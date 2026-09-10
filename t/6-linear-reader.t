@@ -37,24 +37,9 @@ for @blocks -> %block {
 
 is @blocks.elems, 6, 'six linear blocks';
 is-deeply @seq, [1, 2, 3, 4, 5, 6],
-'blocks have consecutive sequence numbers';
-
-my @expected = <heading paragraph heading paragraph item code>;
-my @got;
-
-for @blocks -> %block {
-    @got.push: %block<type>;
-}
-
-is-deeply @got, @expected,
+    'blocks have consecutive sequence numbers';
+is-deeply @types, [<heading paragraph heading paragraph item code>],
     'block order is preserved';
-
-
-
-is-deeply @types,
-    <heading paragraph heading paragraph item code>,
-    'block order is preserved';
-
 is-deeply @depths, [0, 0, 1, 1, 2, 1],
     'blocks have explicit finite depth values';
 is @blocks[0]<level>, 1, 'head1 retains heading level';
