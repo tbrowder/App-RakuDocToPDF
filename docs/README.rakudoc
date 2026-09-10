@@ -16,6 +16,7 @@ rakudoc2pdf README.rakudoc
 rakudoc2pdf README.rakudoc --output=README.pdf
 
 rakudoc2pdf README.rakudoc --media=A4
+rakudoc2pdf README.rakudoc --type=module-readme
 
 =end code
 
@@ -28,6 +29,7 @@ my IO::Path $pdf = rakudoc-to-pdf(
 'README.rakudoc',
 :output<README.pdf>,
 :media<Letter>,
+:type<module-readme>,
 );
 =end code
 
@@ -72,12 +74,13 @@ to see its usage information:
 =begin code
 
 Usage:
-rakudoc2pdf INPUT.rakudoc [--output=FILE.pdf] [--media=Letter|A4]
+rakudoc2pdf INPUT.rakudoc [--output=FILE.pdf] [--media=Letter|A4] [--type=generic|module-readme]
 
 Examples:
 rakudoc2pdf README.rakudoc
 rakudoc2pdf README.rakudoc --output=README.pdf
 rakudoc2pdf README.rakudoc --media=A4
+rakudoc2pdf README.rakudoc --type=module-readme
 
 =end code
 
@@ -134,8 +137,36 @@ For example:
 =begin code
 
 rakudoc2pdf README.rakudoc --media=A4
+rakudoc2pdf README.rakudoc --type=module-readme
 
 =end code
+
+=head2 C<--type=generic|module-readme>
+
+Selects the document type used for validation before the PDF is generated.
+
+The supported values are:
+
+=item C<generic>
+
+Performs no document-type-specific validation. This is the default.
+
+=item C<module-readme>
+
+Validates conventions for a Raku module README. The current validation checks
+for duplicate C<=TITLE> and C<=SUBTITLE> directives, a C<=SUBTITLE> that
+occurs before C<=TITLE>, and a missing C<=head1 NAME> section.
+
+For example:
+
+=begin code
+
+rakudoc2pdf README.rakudoc --type=module-readme
+
+=end code
+
+If document-type validation fails, the PDF is not generated and the reported
+issues are written as an error.
 
 =head2 C<--help>, C<-h>
 
@@ -153,6 +184,7 @@ my IO::Path $pdf = rakudoc-to-pdf(
 'README.rakudoc',
 :output<README.pdf>,
 :media<Letter>,
+:type<module-readme>,
 );
 
 =end code
@@ -162,6 +194,10 @@ is derived from the input file's basename and is written in the current
 working directory.
 
 The C<:media> argument is also optional and defaults to C<Letter>.
+
+The C<:type> argument is optional and defaults to C<generic>. The supported
+values are C<generic> and C<module-readme>. Document-type validation is
+performed before layout and PDF generation.
 
 The routine returns the C<IO::Path> of the generated PDF file.
 

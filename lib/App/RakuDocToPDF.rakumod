@@ -6,6 +6,7 @@ use PDF::API6;
 use PDF::Content::FontObj;
 use PDF::Page;
 
+use App::RakuDocToPDF::DocumentType;
 use App::RakuDocToPDF::Layout;
 use App::RakuDocToPDF::Media;
 use App::RakuDocToPDF::Reader;
@@ -43,6 +44,7 @@ sub rakudoc-to-pdf(
     $input,
     :$output,
     :$media = 'Letter',
+    :$type = 'generic',
     --> IO::Path
 ) is export {
     my IO::Path $source = $input.IO;
@@ -58,6 +60,21 @@ sub rakudoc-to-pdf(
             $basename = $basename.substr(0, $basename.chars - 8);
         }
         $destination = "$basename.pdf".IO;
+    }
+
+    my Str $document-type = normalize-document-type($type);
+    my @blocks = read-rakudoc($source);
+    my @issues = validate-document(
+        @blocks,
+        :type($document-type),
+    );
+
+    if @issues.elems {
+        my Str $message = "Document validation failed for type '$document-type':";
+        for @issues -> $issue {
+            $message ~= "\n  - $issue";
+        }
+        die $message;
     }
 
     my @box = media-box($media);
@@ -78,7 +95,6 @@ sub rakudoc-to-pdf(
         footer  => $footer-font,
     );
 
-    my @blocks = read-rakudoc($source);
     my @pages = layout-pages(
         @blocks,
         %fonts,

@@ -17,6 +17,7 @@ From the command line:
     rakudoc2pdf README.rakudoc --output=README.pdf
 
     rakudoc2pdf README.rakudoc --media=A4
+    rakudoc2pdf README.rakudoc --type=module-readme
 
 From Raku:
 
@@ -27,6 +28,7 @@ my IO::Path $pdf = rakudoc-to-pdf(
 'README.rakudoc',
 :output<README.pdf>,
 :media<Letter>,
+:type<module-readme>,
 );
 ```
 
@@ -63,12 +65,13 @@ The distribution installs the `rakudoc2pdf` program.
 Execute the program without an input file, or use `--help` or `-h`, to see its usage information:
 
     Usage:
-    rakudoc2pdf INPUT.rakudoc [--output=FILE.pdf] [--media=Letter|A4]
+    rakudoc2pdf INPUT.rakudoc [--output=FILE.pdf] [--media=Letter|A4] [--type=generic|module-readme]
 
     Examples:
     rakudoc2pdf README.rakudoc
     rakudoc2pdf README.rakudoc --output=README.pdf
     rakudoc2pdf README.rakudoc --media=A4
+    rakudoc2pdf README.rakudoc --type=module-readme
 
 Only one input file may be specified.
 
@@ -110,6 +113,28 @@ The default is `Letter`.
 For example:
 
     rakudoc2pdf README.rakudoc --media=A4
+    rakudoc2pdf README.rakudoc --type=module-readme
+
+`--type=generic|module-readme`
+------------------------------
+
+Selects the document type used for validation before the PDF is generated.
+
+The supported values are:
+
+  * `generic`
+
+Performs no document-type-specific validation. This is the default.
+
+  * `module-readme`
+
+Validates conventions for a Raku module README. The current validation checks for duplicate `=TITLE` and `=SUBTITLE` directives, a `=SUBTITLE` that occurs before `=TITLE`, and a missing `=head1 NAME` section.
+
+For example:
+
+    rakudoc2pdf README.rakudoc --type=module-readme
+
+If document-type validation fails, the PDF is not generated and the reported issues are written as an error.
 
 `--help`, `-h`
 --------------
@@ -128,12 +153,15 @@ my IO::Path $pdf = rakudoc-to-pdf(
 'README.rakudoc',
 :output<README.pdf>,
 :media<Letter>,
+:type<module-readme>,
 );
 ```
 
 The `:output` argument is optional. If it is omitted, the output filename is derived from the input file's basename and is written in the current working directory.
 
 The `:media` argument is also optional and defaults to `Letter`.
+
+The `:type` argument is optional and defaults to `generic`. The supported values are `generic` and `module-readme`. Document-type validation is performed before layout and PDF generation.
 
 The routine returns the `IO::Path` of the generated PDF file.
 

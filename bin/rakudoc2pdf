@@ -6,18 +6,20 @@ use App::RakuDocToPDF;
 sub usage(--> Nil) {
     say q:to/END/;
 Usage:
-    rakudoc2pdf INPUT.rakudoc [--output=FILE.pdf] [--media=Letter|A4]
+    rakudoc2pdf INPUT.rakudoc [--output=FILE.pdf] [--media=Letter|A4] [--type=generic|module-readme]
 
 Examples:
     rakudoc2pdf README.rakudoc
     rakudoc2pdf README.rakudoc --output=README.pdf
     rakudoc2pdf README.rakudoc --media=A4
+    rakudoc2pdf README.rakudoc --type=module-readme
 END
 }
 
 my Str $input = '';
 my Str $output = '';
 my Str $media = 'Letter';
+my Str $type = 'generic';
 
 for @*ARGS -> $arg {
     if $arg eq '--help' or $arg eq '-h' {
@@ -29,6 +31,9 @@ for @*ARGS -> $arg {
     }
     elsif $arg.starts-with('--media=') {
         $media = $arg.substr('--media='.chars);
+    }
+    elsif $arg.starts-with('--type=') {
+        $type = $arg.substr('--type='.chars);
     }
     elsif $arg.starts-with('-') {
         note "Unknown option '$arg'.";
@@ -50,7 +55,7 @@ unless $input.chars {
     exit 2;
 }
 
-my %args = :$media;
+my %args = :$media, :$type;
 %args<output> = $output if $output.chars;
 
 my IO::Path $pdf = rakudoc-to-pdf($input, |%args);
