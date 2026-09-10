@@ -11,8 +11,8 @@ sub plain-text(
     # Keep the visible portion of a labeled link.
     $text ~~ s:g/ 'L<' ( <-[|>]>+ ) '|' <-[>]>+ '>' /$0/;
 
-    # For the initial renderer, preserve the contents of the common
-    # inline formatting codes but do not attempt styled inline runs yet.
+    # Preserve the visible contents of common inline formatting codes.
+    # Styled inline runs can be added later without changing the block model.
     loop {
         my $before = $text;
         $text ~~ s:g/ <[BIC]> '<' ( <-[>]>+ ) '>' /$0/;
@@ -32,14 +32,40 @@ sub read-rakudoc(
     my @paragraph;
     my @code;
     my Bool $in-code = False;
+    my Int $heading-depth = 0;
+    my Int $sequence = 0;
+
+    sub add-block(
+        Str $type,
+        Str :$text = '',
+        Int :$depth = $heading-depth,
+        Int :$level = 0,
+    ) {
+        my %block = (
+            seq   => ++$sequence,
+            depth => $depth,
+            type  => $type,
+            text  => $text,
+        );
+
+        %block<level> = $level if $level;
+        @blocks.push: %block;
+    }
+
+    sub flush-paragraph() {
+        return unless @paragraph;
+
+        add-block(
+            'paragraph',
+            :text(plain-text(@paragraph.join(' '))),
+        );
+        @paragraph = ();
+    }
 
     for $source.lines -> $line {
         if $in-code {
             if $line ~~ /^ '=end' \s+ 'code' \s* $/ {
-                @blocks.push: {
-                    type => 'code',
-                    text => @code.join("\n"),
-                };
+                add-block('code', :text(@code.join("\n")));
                 @code = ();
                 $in-code = False;
             }
@@ -50,60 +76,44 @@ sub read-rakudoc(
         }
 
         if $line ~~ /^ '=begin' \s+ 'code' / {
-            if @paragraph {
-                @blocks.push: {
-                    type => 'paragraph',
-                    text => plain-text(@paragraph.join(' ')),
-                };
-                @paragraph = ();
-            }
+            flush-paragraph();
             $in-code = True;
             next;
         }
 
         if $line ~~ /^ '=code' \s* (.*) $/ {
-            if @paragraph {
-                @blocks.push: {
-                    type => 'paragraph',
-                    text => plain-text(@paragraph.join(' ')),
-                };
-                @paragraph = ();
-            }
-            @blocks.push: {
-                type => 'code',
-                text => ~$0,
-            };
+            flush-paragraph();
+            add-block('code', :text(~$0));
             next;
         }
 
         if $line ~~ /^ '=head' (\d+) \s+ (.*) $/ {
-            if @paragraph {
-                @blocks.push: {
-                    type => 'paragraph',
-                    text => plain-text(@paragraph.join(' ')),
-                };
-                @paragraph = ();
-            }
-            @blocks.push: {
-                type  => 'heading',
-                level => +$0,
-                text  => plain-text(~$1),
-            };
+            flush-paragraph();
+
+            my Int $level = +$0;
+            $heading-depth = $level - 1;
+            add-block(
+                'heading',
+                :$level,
+                :depth($heading-depth),
+                :text(plain-text(~$1)),
+            );
             next;
         }
 
         if $line ~~ /^ '=item' \s* (.*) $/ {
-            if @paragraph {
-                @blocks.push: {
-                    type => 'paragraph',
-                    text => plain-text(@paragraph.join(' ')),
-                };
-                @paragraph = ();
-            }
-            @blocks.push: {
-                type => 'item',
-                text => plain-text(~$0),
-            };
+            flush-paragraph();
+            add-block(
+                'item',
+                :depth($heading-depth + 1),
+                :text(plain-text(~$0)),
+            );
+            next;
+        }
+
+        if $line ~~ /^ '=page-break' \s* $/ {
+            flush-paragraph();
+            add-block('page-break');
             next;
         }
 
@@ -117,13 +127,7 @@ sub read-rakudoc(
         }
 
         if $line.trim.chars == 0 {
-            if @paragraph {
-                @blocks.push: {
-                    type => 'paragraph',
-                    text => plain-text(@paragraph.join(' ')),
-                };
-                @paragraph = ();
-            }
+            flush-paragraph();
             next;
         }
 
@@ -140,12 +144,6 @@ sub read-rakudoc(
         die "Unterminated '=begin code' block in '$source'.";
     }
 
-    if @paragraph {
-        @blocks.push: {
-            type => 'paragraph',
-            text => plain-text(@paragraph.join(' ')),
-        };
-    }
-
+    flush-paragraph();
     return @blocks.Array;
 }

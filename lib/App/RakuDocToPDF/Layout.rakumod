@@ -97,6 +97,14 @@ sub layout-pages(
 
     for @blocks -> %block {
         given %block<type> {
+            when 'page-break' {
+                # An explicit page break should never create an empty first
+                # page, but after content it always begins a fresh page.
+                if @pages[$page-number].elems {
+                    start-new-page();
+                }
+            }
+
             when 'heading' {
                 my Int $level = (%block<level> // 1).Int;
                 my Numeric $size = $level == 1 ?? 18
