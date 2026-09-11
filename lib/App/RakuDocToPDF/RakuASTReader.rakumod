@@ -98,7 +98,8 @@ sub linearize-rakudoc(
             }
 
 
-            elsif $type eq 'code' {
+            # new code
+            elsif $type eq 'code' or $type eq 'implicit-code' {
                 my Str $text = '';
 
                 for $node.paragraphs -> $paragraph {
@@ -110,8 +111,8 @@ sub linearize-rakudoc(
                     :text(clean-text($text)),
                 );
             }
+            # end new code
 
-            # new code
             elsif $type eq 'TITLE' {
                 my Str $text = '';
 
@@ -150,7 +151,6 @@ sub linearize-rakudoc(
                     :depth($heading-depth),
                 );
             }
-            # end new code
             return;
         }
 
