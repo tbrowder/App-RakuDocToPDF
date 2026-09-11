@@ -13,17 +13,25 @@ LEAVE $output.unlink if $output.e;
 
 $good.spurt: q:to/END/;
 =begin pod
+
 =TITLE App::Example
+
 =SUBTITLE Example documentation
+
 =head1 NAME
+
 App::Example
+
 =end pod
 END
 
 $bad.spurt: q:to/END/;
 =begin pod
+
 =head1 DESCRIPTION
+
 This module README has no NAME section.
+
 =end pod
 END
 

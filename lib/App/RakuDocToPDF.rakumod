@@ -9,7 +9,10 @@ use PDF::Page;
 use App::RakuDocToPDF::DocumentType;
 use App::RakuDocToPDF::Layout;
 use App::RakuDocToPDF::Media;
+
+use App::RakuDocToPDF::RakuASTReader;
 use App::RakuDocToPDF::Reader;
+
 
 sub deterministic-pdf-id(
     Str $text,
@@ -63,7 +66,10 @@ sub rakudoc-to-pdf(
     }
 
     my Str $document-type = normalize-document-type($type);
-    my @blocks = read-rakudoc($source);
+
+    #my @blocks = read-rakudoc($source);
+    my @blocks = read-rakudoc-rakuast($source);
+
     my @issues = validate-document(
         @blocks,
         :type($document-type),

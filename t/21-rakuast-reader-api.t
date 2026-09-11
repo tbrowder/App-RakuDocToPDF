@@ -65,6 +65,15 @@ is @blocks[4]<type>, 'item',
 is @blocks[5]<type>, 'page-break',
     'page break is preserved';
 
+is @blocks[6]<type>, 'heading',
+    'NEXT block is a heading';
+
+is @blocks[6]<text>, 'NEXT',
+'NEXT heading text is preserved';
+
+is @blocks[7]<type>, 'paragraph',
+    'final block is a paragraph';
+
 is @blocks[7]<text>, 'Final paragraph.',
     'final paragraph is preserved';
 
