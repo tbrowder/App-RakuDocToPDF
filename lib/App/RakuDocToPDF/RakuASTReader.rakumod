@@ -82,7 +82,7 @@ sub linearize-rakudoc(
                 );
             }
 
-            # new code
+
             elsif $type eq 'item' {
                 my Str $text = '';
 
@@ -96,7 +96,7 @@ sub linearize-rakudoc(
                     :text(clean-text($text)),
                 );
             }
-            # end new code
+
 
             elsif $type eq 'code' {
                 my Str $text = '';
@@ -111,6 +111,46 @@ sub linearize-rakudoc(
                 );
             }
 
+            # new code
+            elsif $type eq 'TITLE' {
+                my Str $text = '';
+
+                for $node.paragraphs -> $paragraph {
+                    $text ~= $paragraph.Str;
+                }
+
+                add-block(
+                    'title',
+                    :depth(0),
+                    :text(clean-text($text)),
+                );
+            }
+            elsif $type eq 'SUBTITLE' {
+                my Str $text = '';
+
+                for $node.paragraphs -> $paragraph {
+                    $text ~= $paragraph.Str;
+                }
+
+                add-block(
+                    'subtitle',
+                    :depth(0),
+                    :text(clean-text($text)),
+                );
+            }
+            elsif $type eq 'page-break' {
+                add-block(
+                    'page-break',
+                    :depth($heading-depth),
+                );
+            }
+            elsif $type eq 'slide' {
+                add-block(
+                    'slide',
+                    :depth($heading-depth),
+                );
+            }
+            # end new code
             return;
         }
 
