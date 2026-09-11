@@ -186,3 +186,12 @@ sub linearize-rakudoc(
     return @blocks.Array;
 
 }
+
+sub read-rakudoc-rakuast(
+    IO::Path $input,
+    --> Array
+) is export {
+    my RakuAST::StatementList $ast = read-rakuast($input);
+
+    return linearize-rakudoc($ast);
+}
