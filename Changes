@@ -6,6 +6,7 @@ Revision history for App::RakuDocToPDF
     - Add =TITLE and =SUBTITLE document-level directives.
     - Add generic and module-readme document types with initial validation.
     - Wire document types into the library and rakudoc2pdf command line.
+    - Add regression coverage to preserve relative leading whitespace in code blocks.
 
 0.0.1  2026-09-08T18:11:52-05:00
     - Initial version
