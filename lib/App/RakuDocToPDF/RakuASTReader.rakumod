@@ -81,6 +81,23 @@ sub linearize-rakudoc(
                     :text(clean-text($text)),
                 );
             }
+
+            # new code
+            elsif $type eq 'item' {
+                my Str $text = '';
+
+                for $node.paragraphs -> $paragraph {
+                    $text ~= $paragraph.Str;
+                }
+
+                add-block(
+                    'item',
+                    :depth($heading-depth + 1),
+                    :text(clean-text($text)),
+                );
+            }
+            # end new code
+
             elsif $type eq 'code' {
                 my Str $text = '';
 
