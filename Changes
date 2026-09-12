@@ -13,6 +13,7 @@ Revision history for App::RakuDocToPDF
         command line.
     - Add regression coverage to preserve relative leading 
         whitespace in code blocks.
+    - Removed now unneeded App::RakuDocToPDF::Reader module
 
 0.0.1  2026-09-08T18:11:52-05:00
     - Initial version
