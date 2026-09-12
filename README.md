@@ -37,6 +37,8 @@ DESCRIPTION
 
 **App::RakuDocToPDF** converts simple RakuDoc files to paginated PDF documents.
 
+Note documents are now parsed through **RakuAST**.
+
 Its current primary purpose is to produce a printable draft of a module's RakuDoc README for proofreading and handwritten editing. The generated document uses normal Letter or A4 pages rather than one continuously growing PDF page.
 
 The current version deliberately supports a useful subset of RakuDoc rather than attempting to be a complete RakuDoc publishing system.
