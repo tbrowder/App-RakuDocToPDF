@@ -37,6 +37,8 @@ my IO::Path $pdf = rakudoc-to-pdf(
 
 B<App::RakuDocToPDF> converts simple RakuDoc files to paginated PDF documents.
 
+Note documents are now parsed through B<RakuAST>.
+
 Its current primary purpose is to produce a printable draft of a module's
 RakuDoc README for proofreading and handwritten editing. The generated
 document uses normal Letter or A4 pages rather than one continuously
