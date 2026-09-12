@@ -9,10 +9,7 @@ use PDF::Page;
 use App::RakuDocToPDF::DocumentType;
 use App::RakuDocToPDF::Layout;
 use App::RakuDocToPDF::Media;
-
 use App::RakuDocToPDF::RakuASTReader;
-use App::RakuDocToPDF::Reader;
-
 
 sub deterministic-pdf-id(
     Str $text,
