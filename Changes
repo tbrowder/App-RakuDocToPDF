@@ -1,6 +1,11 @@
 Revision history for App::RakuDocToPDF
 
 {{$NEXT}}
+    - Removed now unneeded App::RakuDocToPDF::Reader module
+        which was missed in version 0.0.2 and caused failures
+    - Substituted 'zef install .' for prove6 testing in
+        workflows files
+    - Updated workflows checkout to current @v7
 
 0.0.2  2026-09-12T15:48:59-05:00
     - Add a finite linear RakuDoc block representation with 
@@ -13,7 +18,6 @@ Revision history for App::RakuDocToPDF
         command line.
     - Add regression coverage to preserve relative leading 
         whitespace in code blocks.
-    - Removed now unneeded App::RakuDocToPDF::Reader module
 
 0.0.1  2026-09-08T18:11:52-05:00
     - Initial version
