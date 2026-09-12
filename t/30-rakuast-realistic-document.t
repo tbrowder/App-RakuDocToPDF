@@ -63,8 +63,8 @@ END
 
 my @blocks = read-rakudoc-rakuast($file);
 
-is @blocks.elems, 16,
-    'realistic embedded RakuDoc produces sixteen supported blocks';
+is @blocks.elems, 17,
+    'realistic embedded RakuDoc produces seventeen supported blocks';
 
 my @types = @blocks.map(*<type>).Array;
 
@@ -87,6 +87,7 @@ is-deeply(
         'paragraph',
         'slide',
         'heading',
+        'paragraph',
     ],
     'supported blocks are produced in document order'
 );
@@ -162,7 +163,13 @@ is @blocks[14]<type>, 'slide',
     'slide directive is preserved';
 
 is @blocks[15]<text>, 'FINAL',
-    'final heading is preserved';
+'final heading is preserved';
+
+is @blocks[16]<text>, 'Final paragraph.',
+    'final paragraph is preserved';
+
+is @blocks[16]<depth>, 0,
+    'final paragraph inherits final head1 depth';
 
 is-deeply(
     @blocks.map(*<seq>).Array,
