@@ -5,7 +5,7 @@ NAME
 
 **App::RakuDocToPDF** - Provides routines to convert RakuDoc to PDF
 
-See an example at [click here](./examples/pdf/README.pdf)
+See a simple README.rakudoc example for another module at [click here](./examples/pdf/README.pdf)
 
 SYNOPSIS
 ========
@@ -37,7 +37,7 @@ DESCRIPTION
 
 **App::RakuDocToPDF** converts simple RakuDoc files to paginated PDF documents.
 
-Its primary purpose is to produce a printable draft of a module's RakuDoc README for proofreading and handwritten editing. The generated document uses normal Letter or A4 pages rather than one continuously growing PDF page.
+Its current primary purpose is to produce a printable draft of a module's RakuDoc README for proofreading and handwritten editing. The generated document uses normal Letter or A4 pages rather than one continuously growing PDF page.
 
 The current version deliberately supports a useful subset of RakuDoc rather than attempting to be a complete RakuDoc publishing system.
 
@@ -93,7 +93,7 @@ Thus:
 
     docs/README.rakudoc
 
-produces:
+with no options produces:
 
     ./README.pdf
 

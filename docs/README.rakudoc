@@ -4,7 +4,7 @@
 
 B<App::RakuDocToPDF> - Provides routines to convert RakuDoc to PDF
 
-See an example at L<click here | ./examples/pdf/README.pdf>
+See a simple README.rakudoc example for another module at L<click here | ./examples/pdf/README.pdf>
 =head1 SYNOPSIS
 
 From the command line:
@@ -26,10 +26,10 @@ From Raku:
 use App::RakuDocToPDF;
 
 my IO::Path $pdf = rakudoc-to-pdf(
-'README.rakudoc',
-:output<README.pdf>,
-:media<Letter>,
-:type<module-readme>,
+    'README.rakudoc',
+    :output<README.pdf>,
+    :media<Letter>,
+    :type<module-readme>,
 );
 =end code
 
@@ -37,7 +37,7 @@ my IO::Path $pdf = rakudoc-to-pdf(
 
 B<App::RakuDocToPDF> converts simple RakuDoc files to paginated PDF documents.
 
-Its primary purpose is to produce a printable draft of a module's
+Its current primary purpose is to produce a printable draft of a module's
 RakuDoc README for proofreading and handwritten editing. The generated
 document uses normal Letter or A4 pages rather than one continuously
 growing PDF page.
@@ -112,7 +112,7 @@ docs/README.rakudoc
 
 =end code
 
-produces:
+with no options produces:
 
 =begin code
 
