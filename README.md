@@ -150,10 +150,10 @@ The distribution exports the `rakudoc-to-pdf` routine:
 use App::RakuDocToPDF;
 
 my IO::Path $pdf = rakudoc-to-pdf(
-'README.rakudoc',
-:output<README.pdf>,
-:media<Letter>,
-:type<module-readme>,
+    'README.rakudoc',
+    :output<README.pdf>,
+    :media<Letter>,
+    :type<module-readme>,
 );
 ```
 
@@ -168,9 +168,17 @@ The routine returns the `IO::Path` of the generated PDF file.
 SUPPORTED RAKUDOC
 =================
 
-The current version is intended primarily for ordinary module README files.
+The current version is intended primarily for ordinary module README files. It will eventually handle other uses such as
 
-It recognizes and renders:
+  * creating PDF slide decks
+
+  * multi-purpose documents based on enhanced Rakudoc with features such as
+
+    * controlled page breaks
+
+    * embeddable figures of various types
+
+It currently recognizes and renders:
 
   * headings written with `=headN`
 
