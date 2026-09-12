@@ -25,10 +25,10 @@ From Raku:
 use App::RakuDocToPDF;
 
 my IO::Path $pdf = rakudoc-to-pdf(
-'README.rakudoc',
-:output<README.pdf>,
-:media<Letter>,
-:type<module-readme>,
+    'README.rakudoc',
+    :output<README.pdf>,
+    :media<Letter>,
+    :type<module-readme>,
 );
 ```
 
