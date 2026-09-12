@@ -1,6 +1,8 @@
 Revision history for App::RakuDocToPDF
 
 {{$NEXT}}
+
+0.0.2  2026-09-12T15:48:59-05:00
     - Add a finite linear RakuDoc block representation with 
         sequence and depth values.
     - Add standalone =page-break and =slide markers.
