@@ -5,7 +5,7 @@ NAME
 
 **App::RakuDocToPDF** - Provides routines to convert RakuDoc to PDF
 
-See an example at [click here](./examples/pdf/README.pdf)
+See a simple README.rakudoc example for another module at [click here](./examples/pdf/README.pdf)
 
 SYNOPSIS
 ========
@@ -25,10 +25,10 @@ From Raku:
 use App::RakuDocToPDF;
 
 my IO::Path $pdf = rakudoc-to-pdf(
-'README.rakudoc',
-:output<README.pdf>,
-:media<Letter>,
-:type<module-readme>,
+    'README.rakudoc',
+    :output<README.pdf>,
+    :media<Letter>,
+    :type<module-readme>,
 );
 ```
 
@@ -37,7 +37,9 @@ DESCRIPTION
 
 **App::RakuDocToPDF** converts simple RakuDoc files to paginated PDF documents.
 
-Its primary purpose is to produce a printable draft of a module's RakuDoc README for proofreading and handwritten editing. The generated document uses normal Letter or A4 pages rather than one continuously growing PDF page.
+Note documents are now parsed through **RakuAST**.
+
+Its current primary purpose is to produce a printable draft of a module's RakuDoc README for proofreading and handwritten editing. The generated document uses normal Letter or A4 pages rather than one continuously growing PDF page.
 
 The current version deliberately supports a useful subset of RakuDoc rather than attempting to be a complete RakuDoc publishing system.
 
@@ -93,7 +95,7 @@ Thus:
 
     docs/README.rakudoc
 
-produces:
+with no options produces:
 
     ./README.pdf
 
@@ -150,10 +152,10 @@ The distribution exports the `rakudoc-to-pdf` routine:
 use App::RakuDocToPDF;
 
 my IO::Path $pdf = rakudoc-to-pdf(
-'README.rakudoc',
-:output<README.pdf>,
-:media<Letter>,
-:type<module-readme>,
+    'README.rakudoc',
+    :output<README.pdf>,
+    :media<Letter>,
+    :type<module-readme>,
 );
 ```
 
@@ -168,9 +170,17 @@ The routine returns the `IO::Path` of the generated PDF file.
 SUPPORTED RAKUDOC
 =================
 
-The current version is intended primarily for ordinary module README files.
+The current version is intended primarily for ordinary module README files. It will eventually handle other uses such as
 
-It recognizes and renders:
+  * creating PDF slide decks
+
+  * multi-purpose documents based on enhanced Rakudoc with features such as
+
+    * controlled page breaks
+
+    * embeddable figures of various types
+
+It currently recognizes and renders:
 
   * headings written with `=headN`
 

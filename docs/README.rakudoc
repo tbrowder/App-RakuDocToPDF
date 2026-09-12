@@ -4,7 +4,7 @@
 
 B<App::RakuDocToPDF> - Provides routines to convert RakuDoc to PDF
 
-See an example at L<click here | ./examples/pdf/README.pdf>
+See a simple README.rakudoc example for another module at L<click here | ./examples/pdf/README.pdf>
 =head1 SYNOPSIS
 
 From the command line:
@@ -26,10 +26,10 @@ From Raku:
 use App::RakuDocToPDF;
 
 my IO::Path $pdf = rakudoc-to-pdf(
-'README.rakudoc',
-:output<README.pdf>,
-:media<Letter>,
-:type<module-readme>,
+    'README.rakudoc',
+    :output<README.pdf>,
+    :media<Letter>,
+    :type<module-readme>,
 );
 =end code
 
@@ -37,7 +37,9 @@ my IO::Path $pdf = rakudoc-to-pdf(
 
 B<App::RakuDocToPDF> converts simple RakuDoc files to paginated PDF documents.
 
-Its primary purpose is to produce a printable draft of a module's
+Note documents are now parsed through B<RakuAST>.
+
+Its current primary purpose is to produce a printable draft of a module's
 RakuDoc README for proofreading and handwritten editing. The generated
 document uses normal Letter or A4 pages rather than one continuously
 growing PDF page.
@@ -112,7 +114,7 @@ docs/README.rakudoc
 
 =end code
 
-produces:
+with no options produces:
 
 =begin code
 
@@ -181,10 +183,10 @@ The distribution exports the C<rakudoc-to-pdf> routine:
 use App::RakuDocToPDF;
 
 my IO::Path $pdf = rakudoc-to-pdf(
-'README.rakudoc',
-:output<README.pdf>,
-:media<Letter>,
-:type<module-readme>,
+    'README.rakudoc',
+    :output<README.pdf>,
+    :media<Letter>,
+    :type<module-readme>,
 );
 
 =end code
@@ -204,8 +206,17 @@ The routine returns the C<IO::Path> of the generated PDF file.
 =head1 SUPPORTED RAKUDOC
 
 The current version is intended primarily for ordinary module README files.
+It will eventually handle other uses such as
 
-It recognizes and renders:
+=item creating PDF slide decks
+
+=item multi-purpose documents based on enhanced Rakudoc with features such as
+
+=item2 controlled page breaks
+
+=item2 embeddable figures of various types
+
+It currently recognizes and renders:
 
 =item headings written with C<=headN>
 

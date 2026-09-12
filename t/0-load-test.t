@@ -5,7 +5,7 @@ my @modules = <
     App::RakuDocToPDF::DocumentType
     App::RakuDocToPDF::Layout
     App::RakuDocToPDF::Media
-    App::RakuDocToPDF::Reader
+    App::RakuDocToPDF::RakuASTReader
 >;
 
 plan @modules.elems;
