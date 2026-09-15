@@ -6,6 +6,7 @@ my @modules = <
     App::RakuDocToPDF::Layout
     App::RakuDocToPDF::Media
     App::RakuDocToPDF::RakuASTReader
+    App::RakuDocToPDF::Slidemaker
 >;
 
 plan @modules.elems;

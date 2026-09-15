@@ -20,7 +20,8 @@
     "App::RakuDocToPDF::DocumentType": "lib/App/RakuDocToPDF/DocumentType.rakumod",
     "App::RakuDocToPDF::Layout": "lib/App/RakuDocToPDF/Layout.rakumod",
     "App::RakuDocToPDF::Media": "lib/App/RakuDocToPDF/Media.rakumod",
-    "App::RakuDocToPDF::RakuASTReader": "lib/App/RakuDocToPDF/RakuASTReader.rakumod"
+    "App::RakuDocToPDF::RakuASTReader": "lib/App/RakuDocToPDF/RakuASTReader.rakumod",
+    "App::RakuDocToPDF::Slidemaker": "lib/App/RakuDocToPDF/Slidemaker.rakumod"
   },
   "resources": [
   ],
