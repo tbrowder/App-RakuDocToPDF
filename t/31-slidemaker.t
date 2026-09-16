@@ -63,57 +63,57 @@ my @blocks = (
     },
 );
 
-my %deck = make-slides(@blocks);
+my $deck = make-slides(@blocks);
 
-is %deck<presentation><title>,
+is $deck<presentation><title>,
     'App::RakuDocToPDF',
     'presentation title is preserved';
 
-is %deck<presentation><subtitle>,
+is $deck<presentation><subtitle>,
     'Creating PDFs and Slides from RakuDoc',
     'presentation subtitle is preserved';
 
-is %deck<slides>.elems,
+is $deck<slides>.elems,
     2,
     'two slides are produced';
 
-is %deck<slides>[0]<number>,
+is $deck<slides>[0]<number>,
     1,
     'first slide is numbered 1';
 
-is %deck<slides>[1]<number>,
+is $deck<slides>[1]<number>,
     2,
     'second slide is numbered 2';
 
-is %deck<slides>[0]<blocks>.elems,
+is $deck<slides>[0]<blocks>.elems,
     3,
     'first slide contains three blocks';
 
-is %deck<slides>[0]<blocks>[0]<type>,
+is $deck<slides>[0]<blocks>[0]<type>,
     'heading',
     'first slide starts with heading';
 
-is %deck<slides>[0]<blocks>[0]<text>,
+is $deck<slides>[0]<blocks>[0]<text>,
     'RakuAST',
     'first slide heading text is preserved';
 
-is %deck<slides>[0]<blocks>[1]<type>,
+is $deck<slides>[0]<blocks>[1]<type>,
     'paragraph',
     'paragraph belongs to first slide';
 
-is %deck<slides>[0]<blocks>[2]<type>,
+is $deck<slides>[0]<blocks>[2]<type>,
     'item',
     'item belongs to first slide';
 
-is %deck<slides>[1]<blocks>.elems,
+is $deck<slides>[1]<blocks>.elems,
     2,
     'second slide contains two blocks';
 
-is %deck<slides>[1]<blocks>[0]<text>,
+is $deck<slides>[1]<blocks>[0]<text>,
     'PDF Generation',
     'second slide heading is preserved';
 
-is %deck<slides>[1]<blocks>[1]<text>,
+is $deck<slides>[1]<blocks>[1]<text>,
     'The same linear representation feeds the PDF renderer.',
     'second slide paragraph is preserved';
 
