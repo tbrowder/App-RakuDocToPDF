@@ -21,6 +21,7 @@
     "App::RakuDocToPDF::Layout": "lib/App/RakuDocToPDF/Layout.rakumod",
     "App::RakuDocToPDF::Media": "lib/App/RakuDocToPDF/Media.rakumod",
     "App::RakuDocToPDF::RakuASTReader": "lib/App/RakuDocToPDF/RakuASTReader.rakumod",
+    "App::RakuDocToPDF::SlideLayout": "lib/App/RakuDocToPDF/SlideLayout.rakumod",
     "App::RakuDocToPDF::SlideMaker": "lib/App/RakuDocToPDF/SlideMaker.rakumod"
   },
   "resources": [

@@ -47,6 +47,7 @@ sub rakudoc-to-pdf(
     :$type = 'generic',
     --> IO::Path
 ) is export {
+
     my IO::Path $source = $input.IO;
     die "RakuDoc file '$source' does not exist." unless $source.e;
 
