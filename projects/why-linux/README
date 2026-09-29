@@ -1,0 +1,13 @@
+The original PDF doc here was generated from
+an MS slide maker tool.
+
+The Rakudoc and png files were created by a
+piece of code produced with the help of
+ChatGPT. See the process in the RakudocToPDF
+project.
+
+The goal now is to edit those files as
+necessary to update them and turn them 
+back to a decent looking slide deck in
+PDF in the RakudocToPDF module
+which is in-work at alias 'cdrd'.
