@@ -1,0 +1,526 @@
+use Pod::Load;
+use File::Temp;
+use PDF::Lite;
+use Pod::To::PDF::Lite;
+use PDF::Font::Loader :load-font, :find-font;
+
+use Slidemaker;
+use Slidemaker::Resources;
+use Slidemaker::RakudocUtils;
+use Slidemaker::PDF;
+use Slidemaker::Classes;
+
+my $ifil = "slides.rakudoc";
+my $ofil = $ifil.split(".").head ~ ".pdf";
+
+my $path = "/usr/share/fonts/opentype/freefont";
+my @fonts = (
+    %(:file("$path/FreeMono.otf"), :mono),
+    %(:file("$path/FreeMonoBold.otf"), :mono, :bold),
+    %(:file("$path/FreeMonoBoldOblique.otf"), :mono, :bold, :italic),
+    %(:file("$path/FreeMonoOblique.otf"), :mono, :italic),
+    %(:file("$path/FreeSans.otf")),
+    %(:file("$path/FreeSansBold.otf"), :bold),
+    %(:file("$path/FreeSansBoldOblique.otf"), :bold, :italic),
+    %(:file("$path/FreeSansOblique.otf"), :italic),
+    %(:file("$path/FreeSerif.otf")),
+    %(:file("$path/FreeSerifBold.otf"), :bold),
+    %(:file("$path/FreeSerifBoldItalic.otf"), :bold, :italic),
+    %(:file("$path/FreeSerifItalic.otf"), :italic),
+);
+
+# parse-slides2
+
+if not @*ARGS {
+    print qq:to/HERE/;
+    Usage: {$*PROGRAM.basename} <mode> [options]
+
+    Modes:
+
+      go     - Converts file '$ifil' to a PDF slide deck
+                 named '$ofil'
+
+      file=X - Where X is the path to a Rakudoc file to
+               be converted to a PDF slide deck
+
+      eg     - Downloads the example slide deck input
+                 '$ifil'
+
+    Options:
+
+      debug  - For developers
+
+    HERE
+    exit;
+}
+
+my $pod-fil;
+my $debug = 0;
+
+for @*ARGS  {
+    when /^ :i g o? / {
+        unless $ifil.IO.f {
+            say "Downloading file '$ifil'";
+            my $str = get-content "./resources/$ifil";
+            spurt $ifil, $str;
+        }
+        $pod-fil = $ifil;
+        
+    }
+    when /^ :i 'file=' (\S+) / {
+        $pod-fil = ~$0.IO;
+    }
+    when /^ :i d / {
+        ++$debug;
+    }
+    when /^ :i eg / {
+        my $f = $ifil;
+        say "Downloading file '$f'";
+        my $str = get-content "./resources/$f";
+        spurt $f, $str;
+        exit; # <== dont't forget this!!
+    }
+    default {
+        say "FATAL: Unknown arg '$_'; exiting...";
+        exit;
+    }
+}
+
+$ofil = $pod-fil.split(".").head ~ ".pdf";
+# read the input file and split into:
+#   a config prologue
+#   slide chunks
+# each chunk consists of the text starting at
+# each =slide until the EOF or the next =slide
+
+=begin comment
+# see file lib/Slidemaker/Classes.rakumod
+class Config {
+    # line index number where found (0-indexed)
+    has $.i is required;
+    # raw lines with keyed pairs
+    has @.lines;
+    # resulting hash
+    has %.config;
+}
+=end comment
+
+=begin comment
+# see file lib/Slidemaker/Classes.rakumod
+class Slide {
+    # line index number where found (0-indexed)
+    has $.i is required;
+    has $.title;
+    has @.raw-lines; # as input
+    has %.config;
+}
+=end comment
+
+my @prologue-raw-lines;
+my @slides; # array of Slides
+my @unknown;
+
+# recognized chunks
+my $curr-slide   = 0;
+my $prologue     = 1; # becomes zero at first slide
+
+my @lines = $pod-fil.IO.lines;
+LINE: for @lines.kv -> $i, $v {
+    my $line-num = $i+1;
+    if $debug {
+        say "DEBUG: line {$i+1}: $v";
+    }
+
+    # lines with a leading '=slide' need checking
+    # all others go into prolog or a current slide
+    if $v ~~ /^ :i \h* '=' slide / {
+        # ends prologue
+        $prologue = 0 if $prologue;
+        # ends any existing Slide
+        if $curr-slide {
+            @slides.push: $curr-slide;
+            $curr-slide = 0;
+        }
+        # begins a new Slide
+        #$curr-slide = Slide.new: :$i;
+        $curr-slide = Slidemaker::Classes::Slide.new: :$i;
+        next LINE;
+    }
+    elsif $curr-slide {
+        $curr-slide.raw-lines.push: $v;
+        next LINE;
+    }
+    elsif $prologue {
+        @prologue-raw-lines.push: $v;
+        next LINE;
+    }
+    die qq:to/HERE/;
+    FATAL: unhandled line {$i+1} with value:
+        |$v|
+    HERE
+}
+
+# don't forget the last slide!!!
+if $curr-slide {
+    @slides.push: $curr-slide;
+    $curr-slide = 0;
+}
+
+if $debug {
+    say "DEBUG: showing collected chunks";
+    say "   prologue-raw-lines:";
+    say "   |$_|" for @prologue-raw-lines;
+    say "   Slide contents:";
+    for @slides.kv -> $i, $s {
+        say "      {$i+1} :";
+        say "        raw lines:";
+        say "          |$_|" for $s.raw-lines;
+    }
+}
+
+# use what we have:
+# create the complete pod file for each class, start with prologue:
+my @pods;
+my @s = @prologue-raw-lines;
+
+#unless @s.head ~~ /^ \h* '=begin' \h+ [pod|pod6|rakupod|rakudok] / {
+# TODO this is too fragile, create a sub to make it robust:
+#   strip # comments, then leading blank lines
+#   work from the bottom, do the same in reverse
+unless @s.head ~~ /^ \h* '=begin' \h+ pod \h* $/ {
+    unshift @s, "=begin pod";
+}
+unless @s.tail ~~ /^ \h* '=end' \h+ pod \h* $/ {
+    push @s, "=end pod";
+}
+
+my $pod = @s.join("\n");
+$pod ~= "\n"; # avoid "neol" tag
+@pods.push: $pod; # the default Config
+
+# the base PDF file
+my PDF::Lite $pdf0 .= new;
+
+# then the slides get the same treatment
+# as the prologue which SHOULD be used to control the data
+# for each slide page
+for @slides {
+    @s = $_.raw-lines;
+    unless @s.head ~~ /^ \h* '=begin' \h+ pod \h* $/ {
+        unshift @s, "=begin pod";
+    }
+    unless @s.tail ~~ /^ \h* '=end' \h+ pod \h* $/ {
+        push @s, "=end pod";
+    }
+    $pod = @s.join("\n");
+    $pod ~= "\n"; # avoid "neol" tag
+    @pods.push: $pod; # the default Config
+}
+
+# transform them into pod text chunks for QC
+if $debug {
+    for @pods.kv -> $i, $v {
+        spurt "chunk$i.txt".IO, $v
+    }
+    say "DEBUG: See pod text chunks: 'chunkN.txt'";
+    say "  debug exit..."; exit;
+}
+
+# transform them into PDF files with default Pod::To::PDF::Lite
+# options for sub pod2pdf:
+#   :$width, :$height # default: 612 x 792 [Letter: Portrait]
+POD: for @pods.kv -> $i, $v {
+    #my $p = load $v;
+    my $p = load-pod $v;
+    # we want landscape orientation, fake it:
+    #   :margin default: 20
+    # for @fonts need to use PDF::Font::Loader
+    #   Hash :@fonts (array of hashes: key: path; value: attribut: :bold, :italic, 
+    #             :mono
+
+    with $p {
+        when $_ ~~ Pod::Block::Named {
+            say "known pod block type";
+        }
+        default {
+            my $t = $_.gist;
+            say "UNKNOWN pod block type";
+            say $t;
+        }
+    }
+    =begin comment
+    my $o = Pod::Block::Named.new($p);
+
+    # new plan: handle the pod here
+    say qq:to/HERE/;
+    ==============================
+    POD:
+    HERE
+    =end comment
+
+    next POD;
+    # say "DEBUG early exit"; exit;
+
+    =begin comment
+    # using sub pod2pdf
+    my PDF::Lite $pdf = pod2pdf $p, 
+                        :pdf($pdf0), # add this pdf to the parent pfd0
+                        :width(792), :height(612), # landscape Letter
+                        :margin(72);
+    =end comment
+    =begin comment
+    # using class Pod::To::PDF::Lite.render
+    my $style = Pod::To::PDF::Lite::Style.new: 
+                 :font-size(30) # 40 is too large
+                 ;
+    # this works!!
+    my Pod::To::PDF::Lite $pdf .= new: :pod($p), 
+                        :@fonts,
+                        :pdf($pdf0), # add this pdf to the parent pdf0
+                        :width(792), :height(612), # landscape Letter
+                        :margin(72),
+                        :$style,
+                        ;
+    
+    # try embellishing it here:
+    my %font-map = $pdf.font-map;
+    if $debug {
+        my $np = $pdf.pdf.Pages.elems;
+        say "npages = $np";
+    }
+    $style = Pod::To::PDF::Lite::Style.new: 
+                 :font-size(20)
+                 ;
+    my $w = Pod::To::PDF::Lite::Writer.new: 
+                 :pages($pdf.pdf.Pages),
+                 :%font-map,
+                 :$style;
+    =end comment
+                 ;
+    #my $w = $pdf.writer;
+}
+
+=begin comment
+# do any pagination during page embellishment
+for $pdf0.pages.kv -> $i, $page {
+    say "pdf page index: ", $i;
+    #"my $w = Pod::To::PDF::Lite::Writer.new: :@font-map;
+}
+=end comment
+
+$pdf0.save-as: $ofil;
+say "See PDF slide deck: '$ofil'";
+
+=finish
+
+# see file lib/*/RakudocUtils
+# also see file lib/*/Classes
+my Config $config = create-config @prologue-raw-lines;
+
+# create the individual slides as PDF files in tempdir
+# see file lib/*/PDF
+my @slide-pdfs = slides2pdf @slides, :$config, :$debug;
+
+# the final pdf file
+slides2pdf @slide-pdfs, :$ofil, :$config, :$debug;
+
+say "See PDF slide deck: $ofil";
+
+
+# tmp end
+=finish
+
+=begin comment
+    when $v ~~ /^ \h* '=begin' \h+ (\N+) / {
+        my $txt = ~$0;
+        if $txt ~~ /:i comment / {
+            if $curr-comment {
+                die "FATAL: Nested comments not allowed":
+            }
+            $curr-comment = 1;
+        }
+        elsif $txt ~~ /:i raku? pod / {
+            next; # ignore
+        }
+    }
+    when $v ~~ /^ \h* '=end' \h+ (\N+) / {
+        my $txt = ~$0;
+        if $txt ~~ /:i comment / {
+            if $curr-comment {
+                $curr-comment = 0;
+            }
+            else {
+                die "FATAL: End comment with no matching begin";
+            }
+        }
+        elsif $txt ~~ /:i raku? pod / {
+            next; # ignore
+        }
+    }
+    when $v ~~ /^ \h* '=comment' \h+ (\N+) / {
+        my $txt = ~$0;
+        # ignore inline comment
+        next;
+    }
+
+    # beginning of a Config block for the prologue
+    # OR an existing slide
+    when $v ~~ /^ \h* '=for' \h+ (\S+) [\h+ (\N+)]? / {
+        # intended for Config info either in the 
+        # prologue or the existing slide
+        my $typ  = ~$0;
+        my $txt  = ~$1 if $1.defined;
+
+        if $typ !~~ /:i config / {
+            die qq:to/HERE/;
+            FATAL: Unexpected line: 
+                '$typ'
+              at line {$i+1} in file '$pod-fil'.
+            HERE
+        }
+
+        # only one Config allowed for the prologue or the slide
+        # so we keep reading lines until done
+        if $curr-slide {
+            ; # ok
+        }
+        elsif $prologue {
+            if $curr-config {
+                @configs.push: $curr-config;
+                $curr-config = 0;
+            }
+            $curr-config = Config.new: :$i;
+        }
+    }
+    when $v ~~ /^ \h* '=' (\N+) / {
+        my $txt = ~$0.trim;
+        if $curr-config {
+            # config line is space separated tokens
+            my @tokens = $txt.words;
+        }
+        else {
+            die qq:to/HERE/;
+            FATAL: Unexpected line: 
+                '$txt'
+              at line {$i+1} in file '$pod-fil'.
+            HERE
+        }
+    }
+    default {
+        next if $curr-comment;
+        if $curr-slide {
+            $curr-slide.lines.push: $v;
+        }
+        elsif $curr-config {
+            $curr-config.lines.push: $v;
+        }
+        elsif $v !~~ /\S/ {
+            say "Expected blank line between known sections at line number {$i+1}";
+            say " curr-slide:   ", $curr-slide;
+            say " curr-comment: ", $curr-comment;
+            say " curr-config:  ", $curr-config;
+        }
+    }
+}
+=end comment
+
+if $curr-slide {
+    @slides.push: $curr-slide;
+    $curr-slide = 0;
+}
+
+if $curr-config {
+    @configs.push: $curr-config;
+    $curr-config = 0;
+}
+
+if $debug {
+    say "DEBUG: showing \@slides lines:";
+    for @slides.kv -> $i, $s {
+        say "  slide $i";
+        for $s.lines {
+            "    | ", $_;
+        }
+    }
+}
+
+# end of active code for now
+=finish
+
+
+my @roots = load $pod-fil;
+my $nr = @roots.elems;
+if $nr > 1 {
+    print qq:to/HERE/;
+    WARNING: This input pod file has $nr roots. This program
+    is not meant to handle a pod file with more than one pod
+    root. 
+
+    Exiting.
+    HERE
+    exit;
+}
+
+
+my ($p, @c, %h);
+$p = @roots.head;
+
+my @pods;
+@pods.unshift: $p;
+my $idx = 0;
+while @pods {
+    $p = @pods.pop;
+    %h = $p.config if $p.config;
+    @c = $p.contents if $p.contents;
+    for %h.kv -> $k, $v {
+        say "config key: $k";
+        say "  value: $v";
+    }
+    for @c -> $c {
+        my $typ = is-pod($c);
+        unless $typ {
+            say "Found content $idx: $c";
+            next;
+        }
+        ++$idx;
+        say "Found a Pod object $idx: $typ";
+        with $typ {
+            when /:i named / {
+                my $nam = $c.name.lc;
+                say "  Its name is '$nam'";
+                if $nam eq 'slide' {
+                    say "Starting a new slide...";
+                }
+            }
+            when /:i fc / {
+                my $fc = $c.type;
+                say "  Its type is '$fc'";
+                my @arr = $c.meta;
+                say "  Its meta is '{@arr.gist}'";
+            }
+            when /:i item / {
+                my $lvl = $c.level;
+                say "  Its level is '$lvl'";
+            }
+        }
+        @pods.unshift: $c;
+    }
+}
+
+sub is-pod($o) {
+    my $res;
+    with $o {
+        when $_ ~~ Pod::Block::Para       { $res = <Para>       }
+        when $_ ~~ Pod::Block::Named      { $res = <Named>      }
+        when $_ ~~ Pod::Block::Declarator { $res = <Declarator> }
+        when $_ ~~ Pod::Block::Code       { $res = <Code>       }
+        when $_ ~~ Pod::Block::Comment    { $res = <Comment>    }
+        when $_ ~~ Pod::Block::Table      { $res = <Table>      }
+        when $_ ~~ Pod::Heading           { $res = <Hdg>        }
+        when $_ ~~ Pod::Item              { $res = <Item>       }
+        when $_ ~~ Pod::Defn              { $res = <Defn>       }
+        when $_ ~~ Pod::FormattingCode    { $res = <FC>         }
+        default                     { $res = $_.gist; } #<Unknown>    }
+    }
+    $res
+}

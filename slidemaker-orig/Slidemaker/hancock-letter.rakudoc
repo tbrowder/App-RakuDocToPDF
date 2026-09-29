@@ -1,0 +1,16 @@
+=begin pod
+
+=begin config
+# Defaults
+:orientation<landscape> 
+:media<Letter>        # 8.5in X 11.0in 
+:body-font<FreeSerif,12>
+:head-font<FreeSerifBold,12>
+:title-font<FreeSerifBold,14>
+:slide-title-height<1in>
+:slide-title-fill<Blue>
+:slide-body-fill<White>
+=end config
+
+=end pod
+

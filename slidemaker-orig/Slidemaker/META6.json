@@ -1,0 +1,50 @@
+{
+  "auth": "zef:tbrowder",
+  "authors": [
+    "Tom Browder"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+    "Pod::TreeWalker",
+    "JSON::Class:auth<zef:vrurg>",
+    "Abbreviations",
+    "PDF::Document:ver<0.0.10+>",
+    "FontFactory::Type1:ver<1.1.1+>",
+    "Text::Utils",
+    "File::Temp",
+    "Pod::Load",
+    "PDF::Tags::Reader",
+    "Cairo",
+    "Pod::Load",
+    "Pod::To::PDF",
+    "Pod::To::PDF::Lite:ver<0.1.10>",
+    "Pod::To::Markdown",
+    "Compress::PDF"
+  ],
+  "description": "Provides routines for generating PDF slides from Rakudoc input.",
+  "license": "Artistic-2.0",
+  "name": "Slidemaker",
+  "perl": "6.d",
+  "provides": {
+    "Slidemaker": "lib/Slidemaker.rakumod",
+    "Slidemaker::Action": "lib/Slidemaker/Action.rakumod",
+    "Slidemaker::Classes": "lib/Slidemaker/Classes.rakumod",
+    "Slidemaker::Listener": "lib/Slidemaker/Listener.rakumod",
+    "Slidemaker::PDF": "lib/Slidemaker/PDF.rakumod",
+    "Slidemaker::RakudocUtils": "lib/Slidemaker/RakudocUtils.rakumod",
+    "Slidemaker::Resources": "lib/Slidemaker/Resources.rakumod",
+    "Slidemaker::TestListener": "lib/Slidemaker/TestListener.rakumod"
+  },
+  "resources": [
+    "slides.rakudoc",
+    "example.rakudoc"
+  ],
+  "source-url": "https://github.com/tbrowder/Slidemaker.git",
+  "tags": [
+    "pod slides pdf rakudoc"
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
+}

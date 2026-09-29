@@ -1,0 +1,160 @@
+=begin pod
+
+=slide Why Linux?
+=subtitle An alternative to Windows/Mac computers
+=author Tom Browder
+=date 2024-05-26
+
+=slide Hypothesis
+
+Young people interested in careers involved with science, mathematics,
+engineering, or almost any technical field should be introduced to
+B<Linux>.
+
+=slide What is Linux?
+=subtitle Part 1
+
+More formally known as B<GNU/Linux> ,
+it's a free operating system (OS) invented by Linus Torvald to
+provide a UNIX-like system with all the standard
+command-line and graphical tools that accompany
+such a system.
+
+B<Linux>, rather than Windows or Mac, provides much of the
+I<behind-the-scenes cloud> computing in data centers and
+*high-performance computing facilities. It also powers the Android and
+I<the Internet of Things>* (IoT).
+
+=slide What is Linux?
+=subtitle Part 2
+
+A more detailed look:
+
+L<https://www.lifewire.com/basic-guide-linux-operating-system-2202786>
+
+=slide What is Linux?
+=subtitle Part 3
+
+The command-line environment provides the user with almost complete
+freedom to automate tasks typical in research or other work or study
+in technical fields.
+
+B<Linux> also gives the user much greater control over what happens
+and what does not happen on his or her computer.
+
+=slide Linux vs. Windows: Windows
+
+Windows:
+
+=item Is everywhere
+
+=item Is primarily a GUI operation
+
+=item Is expensive
+
+=item B<Hides internals>
+
+=item B<Has a non-case-sensitive file system>
+
+=item Updates when Microsoft says it should, often restarting your
+computer without your permission.
+
+
+=slide Linux vs. Windows: Linux
+
+Linux:
+
+=item Is pretty much the opposite of Windows in most respects
+
+=item Is everywhere, although it is usually working behind the scenes
+
+=item Has both GUI and intrinsic command line capabilities
+
+=item B<Is FREE>
+
+=item Shows as much or as little of the internals as you want to see
+
+=item Has a case-sensitive file system
+
+=item B<Performs upgrades only if you want it to>
+
+=item Is unparalleled for the scientist or engineers: a powerful,
+"programmable calculator"
+
+=slide Linux vs. Windows
+
+Other opinions
+
+L<https://www.lifewire.com/windows-vs-linux-mint-2200609>
+
+L<http://whylinuxisbetter.net/en/>
+
+L<https://www.popsci.com/switch-to-linux-operating-system#page-4w>
+
+L<https://www.makeuseof.com/tag/linux-beginners-guide/>
+
+=slide Linux: Introduction
+
+Empty while working at the command line...
+
+L<25%|pics/my-deb8-desktop-Screenshot.png>
+
+=slide Linux: Introduction
+
+Cluttered while working with windowed programs...
+
+=comment L<25%|pics/cluttered-desktop-Screenshot.png>
+
+
+=slide Linux: How to get it
+
+On Windows or Mac:
+
+=item Use B<Putty> to connect to a cloud server (as cheap as $2.50 per month)
+
+=item Install the Windows 10 Ubuntu subsystem
+
+=item Use a live, bootable USB [recommended for intro]
+
+=item Use a live, bootable CD/DVD [only as a last resort]
+
+=slide Linux: How to get it
+
+=item Install Linux as a VM guest on Windows 10 Pro Hyper-V
+
+=item Install VirtualBox to run a Linux Virtual Machine
+
+=item Use I<Cygwin> on Windows
+
+Best:
+
+=item Use a dual-boot, native installation
+
+=item Use Hyper-V on Windows 10 Pro
+
+=item Use a dedicated GNU/Linux PC or laptop
+
+=slide Linux comes in many "flavors"
+
+A Linux system comes packaged in many B<distributions> such as
+Debian, Ubuntu, Linux Mint, and others.
+
+See L<https://distrowatch.com> for lots of information about
+popularity, download statistics, and other stats on hundreds of
+B<distros>.
+
+My Linux friends think I<Linux Mint> is one of the best I<distros> for beginners. I
+prefer I<Debian> and have used it for over ten years
+
+=slide Linux help?
+
+There is practically an infinite amount of Linux resources to be found
+on the Internet.
+
+My group, the Northwest Florida Linux User Group (NWFLUG), meets
+monthly, and we have an installation meeting (by appointment only) on
+the third Monday of every month.
+
+Check out our website at L<https://nwflug.org>.
+
+=end pod

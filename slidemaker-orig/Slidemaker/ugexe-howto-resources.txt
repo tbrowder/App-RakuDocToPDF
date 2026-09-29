@@ -1,0 +1,2 @@
+my $res = %?RESOURCES<foo>.open();
+say $res.slurp(:close);

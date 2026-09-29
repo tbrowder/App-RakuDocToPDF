@@ -1,0 +1,49 @@
+Move dot.github-hold back to .github
+
+Ensure resources handling is correct for installed module
+
+Use Pod::TreeWalker and RakuDoc::Utils
+  to handle slide chunks
+
+New tack:
+  + use my simple first step to extract individual
+    pod chunks for each slide
+  + then unpack the pod manually and place it on the
+    page
+  + note the same tack could work for PDF::Letter
+
+Now using 'Pod::To::PDF::Lite' to gen the basic PDF slides
+  + in the interim, consider possibility of using
+      a non-standard =slide format
+      without a formal pod component
+
+  + undocumented: use the :$style option 
+      define a new Style class object, and set the params
+        you want the single page will use it
+
+  + need to be able to tweak the output via 
+    the module's 'writer' method
+    - perhaps add special :config key/value
+    - if David is willing, help define Config values that will
+      affect a pod chunk's affect on the $page
+  + try:
+    - after intial conversion, go through all pages
+      and put the title in a blue box, rewrite title
+      (and subtitle) and overlay them in white in the
+      box
+    - try to set change font and size on the generated
+      pages
+
+=old
+
+Use 'Rakuast::RakuDoc::Render' parsing to begin
+rudimentary generation of simple slides, letters, and articles.
+
+Use the following as test beds and use soonish:
+
+slides: Why Linux
+letter: Hancock
+
+Parse with parser used with Coke's text test.
+See /dev dir in FontFactory
+
