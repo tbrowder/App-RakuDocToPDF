@@ -10,6 +10,8 @@ use App::RakuDocToPDF::DocumentType;
 use App::RakuDocToPDF::Layout;
 use App::RakuDocToPDF::Media;
 use App::RakuDocToPDF::RakuASTReader;
+use App::RakuDocToPDF::SlideLayout;
+use App::RakuDocToPDF::SlideMaker;
 
 sub deterministic-pdf-id(
     Str $text,
@@ -40,11 +42,25 @@ sub deterministic-pdf-id(
     return Buf.new(@bytes).decode('latin-1');
 }
 
+sub normalize-style(
+    $style is copy,
+    --> Str
+) {
+    $style .= Str;
+    $style .= lc;
+
+    return $style if $style eq 'document';
+    return $style if $style eq 'slides';
+
+    die "Unknown PDF style '$style'. Expected one of: document, slides.";
+}
+
 sub rakudoc-to-pdf(
     $input,
     :$output,
     :$media = 'Letter',
     :$type = 'generic',
+    :$style = 'document',
     --> IO::Path
 ) is export {
 
@@ -64,6 +80,7 @@ sub rakudoc-to-pdf(
     }
 
     my Str $document-type = normalize-document-type($type);
+    my Str $pdf-style = normalize-style($style);
 
     #my @blocks = read-rakudoc($source);
     my @blocks = read-rakudoc-rakuast($source);
@@ -79,6 +96,19 @@ sub rakudoc-to-pdf(
             $message ~= "\n  - $issue";
         }
         die $message;
+    }
+
+    if $pdf-style eq 'slides' {
+        my $deck = make-slides(@blocks);
+        my Str $pdf-id = deterministic-pdf-id(
+            $source.slurp ~ "\0slides"
+        );
+
+        return render-slides(
+            $deck,
+            $destination,
+            :$pdf-id,
+        );
     }
 
     my @box = media-box($media);

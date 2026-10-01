@@ -30,6 +30,7 @@ my IO::Path $pdf = rakudoc-to-pdf(
     :output<README.pdf>,
     :media<Letter>,
     :type<module-readme>,
+    :style<document>,
 );
 =end code
 
@@ -187,6 +188,7 @@ my IO::Path $pdf = rakudoc-to-pdf(
     :output<README.pdf>,
     :media<Letter>,
     :type<module-readme>,
+    :style<document>,
 );
 
 =end code
@@ -200,6 +202,11 @@ The C<:media> argument is also optional and defaults to C<Letter>.
 The C<:type> argument is optional and defaults to C<generic>. The supported
 values are C<generic> and C<module-readme>. Document-type validation is
 performed before layout and PDF generation.
+
+The C<:style> argument is optional and defaults to C<document>. The supported
+values are C<document> and C<slides>. The C<slides> style uses the RakuAST
+linear representation to build a slide deck and renders each C<=slide> as a
+separate Letter-landscape PDF page.
 
 The routine returns the C<IO::Path> of the generated PDF file.
 

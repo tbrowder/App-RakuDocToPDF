@@ -3,6 +3,8 @@ use v6.d;
 unit module App::RakuDocToPDF::SlideLayout;
 
 use PDF::API6;
+use PDF::Content::FontObj;
+use PDF::Page;
 
 constant $SLIDE-WIDTH  = 792;
 constant $SLIDE-HEIGHT = 612;
@@ -74,98 +76,56 @@ sub layout-slide(
     return @lines.Array;
 }
 
-
 sub render-slides(
     $deck,
     IO::Path $output,
+    Str :$pdf-id,
     --> IO::Path
 ) is export {
-
     my PDF::API6 $pdf .= new;
+    $pdf.id = $pdf-id if $pdf-id.defined;
+
+    my PDF::Content::FontObj $heading-font = $pdf.core-font(
+        'Helvetica-Bold'
+    );
+    my PDF::Content::FontObj $body-font = $pdf.core-font(
+        'Times-Roman'
+    );
+    my PDF::Content::FontObj $code-font = $pdf.core-font(
+        'Courier'
+    );
+
+    my %fonts = (
+        heading => $heading-font,
+        body    => $body-font,
+        code    => $code-font,
+    );
 
     my Int $num-slides = $deck<slides>.elems;
 
     for 0 ..^ $num-slides -> Int $i {
         my $slide = $deck<slides>[$i];
+        my PDF::Page $page = $pdf.add-page;
 
-        my $page = $pdf.add-page;
-
-        $page.MediaBox = [
+        $page.media-box = [
             0,
             0,
             $SLIDE-WIDTH,
             $SLIDE-HEIGHT,
         ];
 
-        my $content = $page.gfx;
+        my @lines = layout-slide($slide);
 
-        my $heading-font = $pdf.core-font(
-            'Helvetica-Bold'
-        );
-
-        my $body-font = $pdf.core-font(
-            'Times-Roman'
-        );
-
-        my $code-font = $pdf.core-font(
-            'Courier'
-        );
-
-        #===========================
-        # The blocks loop
-        #===========================
-        my Numeric $x = 54;
-        my Numeric $y = $SLIDE-HEIGHT - 54;
-
-        my Int $num-blocks = $slide<blocks>.elems;
-
-        for 0 ..^ $num-blocks -> Int $j {
-            my $block = $slide<blocks>[$j];
-
-            my Str $type = $block<type> // '';
-            my Str $text = $block<text> // '';
-
-            if $type eq 'heading' {
-                $content.text: {
-                    .font = $heading-font, 28;
-                    .text-position = $x, $y;
-                    .say: $text;
-                }
-
-                $y -= 48;
+        $page.text: {
+            for @lines -> %line {
+                .font = %fonts{%line<font>}, %line<size>;
+                .text-position = %line<x>, %line<y>;
+                .say: %line<text>;
             }
-            elsif $type eq 'paragraph' {
-                $content.text: {
-                    .font = $body-font, 18;
-                    .text-position = $x, $y;
-                    .say: $text;
-                }
-
-                $y -= 30;
-            }
-            elsif $type eq 'item' {
-                $content.text: {
-                    .font = $body-font, 18;
-                    .text-position = $x + 24, $y;
-                    .say: '- ' ~ $text;
-                }
-
-                $y -= 30;
-            }
-            elsif $type eq 'code' {
-                $content.text: {
-                    .font = $code-font, 14;
-                    .text-position = $x + 24, $y;
-                    .say: $text;
-                }
-
-                $y -= 24;
-            }
-
         }
     }
 
-    $pdf.save-as($output.Str);
+    $pdf.save-as: $output.Str, :!info;
 
     return $output;
 }

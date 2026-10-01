@@ -29,6 +29,7 @@ my IO::Path $pdf = rakudoc-to-pdf(
     :output<README.pdf>,
     :media<Letter>,
     :type<module-readme>,
+    :style<document>,
 );
 ```
 
@@ -156,6 +157,7 @@ my IO::Path $pdf = rakudoc-to-pdf(
     :output<README.pdf>,
     :media<Letter>,
     :type<module-readme>,
+    :style<document>,
 );
 ```
 
@@ -164,6 +166,8 @@ The `:output` argument is optional. If it is omitted, the output filename is der
 The `:media` argument is also optional and defaults to `Letter`.
 
 The `:type` argument is optional and defaults to `generic`. The supported values are `generic` and `module-readme`. Document-type validation is performed before layout and PDF generation.
+
+The `:style` argument is optional and defaults to `document`. The supported values are `document` and `slides`. The `slides` style uses the RakuAST linear representation to build a slide deck and renders each `=slide` as a separate Letter-landscape PDF page.
 
 The routine returns the `IO::Path` of the generated PDF file.
 
