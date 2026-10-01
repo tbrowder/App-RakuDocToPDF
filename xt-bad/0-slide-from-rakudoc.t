@@ -14,10 +14,20 @@ my $png12 = "./projects/why-linux/why-linux-slide-12.png".IO;
 my $rd    = "./projects/why-linux/README".IO;
 my $rdoc  = "./projects/why-linux/why-linux.rakudoc".IO;
 
-my $pdf =  
+# convert the rakudoc and pics to PDF
+my $pdf   
 
+=begin comment
+sub rakudoc-to-pdf(
+    $input,
+    :$output,
+    :$media = 'Letter',
+    :$type = 'generic',
+    --> IO::Path
+) is export {
+=end comment
 
-
+rakudoc-to-pdf($rdoc, :output<test.pdf>, :type<slide>);
 
 
 
