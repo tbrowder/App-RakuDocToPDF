@@ -151,6 +151,19 @@ sub linearize-rakudoc(
                     :depth($heading-depth),
                 );
             }
+            elsif $type eq 'image' {
+                my Str $text = '';
+
+                for $node.paragraphs -> $paragraph {
+                    $text ~= $paragraph.Str;
+                }
+
+                add-block(
+                    'image',
+                    :depth($heading-depth),
+                    :text(clean-text($text)),
+                );
+            }
             return;
         }
 

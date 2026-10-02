@@ -5,6 +5,7 @@ unit module App::RakuDocToPDF::SlideLayout;
 use PDF::API6;
 use PDF::Content::FontObj;
 use PDF::Page;
+use PDF::XObject::Image;
 
 constant $SLIDE-WIDTH  = 792;
 constant $SLIDE-HEIGHT = 612;
@@ -71,6 +72,18 @@ sub layout-slide(
 
             $y -= 24;
         }
+        elsif $type eq 'image' {
+            @lines.push: {
+                type       => 'image',
+                path       => $text,
+                x          => $margin-left,
+                top        => $y,
+                max-width  => $SLIDE-WIDTH - (2 * $margin-left),
+                max-height => $y - $margin-top,
+            };
+
+            $y = $margin-top;
+        }
     }
 
     return @lines.Array;
@@ -80,6 +93,7 @@ sub render-slides(
     $deck,
     IO::Path $output,
     Str :$pdf-id,
+    IO::Path :$base-dir = '.'.IO,
     --> IO::Path
 ) is export {
     my PDF::API6 $pdf .= new;
@@ -118,9 +132,44 @@ sub render-slides(
 
         $page.text: {
             for @lines -> %line {
+                next if (%line<type> // '') eq 'image';
+
                 .font = %fonts{%line<font>}, %line<size>;
                 .text-position = %line<x>, %line<y>;
                 .say: %line<text>;
+            }
+        }
+
+        for @lines -> %line {
+            next unless (%line<type> // '') eq 'image';
+
+            my IO::Path $image-path = %line<path>.IO;
+            unless $image-path.is-absolute {
+                $image-path = $base-dir.add($image-path);
+            }
+
+            die "Slide image '$image-path' does not exist."
+                unless $image-path.e;
+
+            $page.graphics: {
+                my PDF::XObject::Image $image = .load-image(
+                    $image-path.Str
+                );
+
+                my Numeric $width = %line<max-width>;
+                my Numeric $height = $width * $image.height / $image.width;
+
+                if $height > %line<max-height> {
+                    $height = %line<max-height>;
+                    $width = $height * $image.width / $image.height;
+                }
+
+                my Numeric $y = %line<top> - $height;
+
+                .do: $image,
+                    :position[%line<x>, $y],
+                    :$width,
+                    :$height;
             }
         }
     }

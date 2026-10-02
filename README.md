@@ -240,3 +240,33 @@ COPYRIGHT AND LICENSE
 
 This library is free software; you may redistribute it or modify it under the Artistic License 2.0.
 
+SLIDE EXAMPLE WITH IMAGES
+=========================
+
+The `examples/why-linux` directory contains a complete presentation reconstructed from an older PDF slide deck. It consists of one RakuDoc source file and two PNG images.
+
+The RakuDoc source uses the standalone `=slide` marker to begin each slide and `=image` to place an image on a slide. Image paths are resolved relative to the RakuDoc source file. For example:
+
+    =slide
+    =head1 Linux: Introduction
+
+    Desktop empty while working at the command line
+
+    =image media/linux-command-line.png
+
+Generate the presentation from the distribution root with:
+
+    raku -Ilib examples/why-linux/generate.raku
+
+The script is equivalent to:
+
+    use App::RakuDocToPDF;
+
+    rakudoc-to-pdf(
+        'examples/why-linux/why-linux.rakudoc',
+        :output<examples/why-linux/why-linux.pdf>,
+        :style<slides>,
+    );
+
+The generated PDF is deliberately not stored in the distribution. It can be regenerated from the RakuDoc and PNG source files whenever needed.
+

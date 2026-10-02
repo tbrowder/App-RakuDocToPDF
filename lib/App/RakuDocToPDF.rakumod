@@ -108,6 +108,7 @@ sub rakudoc-to-pdf(
             $deck,
             $destination,
             :$pdf-id,
+            :base-dir($source.parent),
         );
     }
 

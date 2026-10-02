@@ -2,8 +2,6 @@ use v6.d;
 
 use Test;
 
-my $debug = 0;
-
 use App::RakuDocToPDF;
 
 my IO::Path $source = $*TMPDIR.add(
