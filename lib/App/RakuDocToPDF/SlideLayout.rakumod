@@ -7,6 +7,7 @@ use PDF::Content::FontObj;
 use PDF::Page;
 use PDF::XObject::Image;
 
+
 constant $SLIDE-WIDTH  = 792;
 constant $SLIDE-HEIGHT = 612;
 
@@ -205,14 +206,64 @@ sub render-slides(
             $SLIDE-HEIGHT,
         ];
 
+        my Numeric $header-height = 72;
+
+        $page.graphics: {
+
+            .FillColor = :DeviceRGB[0.267, 0.447, 0.769];
+
+            .Rectangle(
+                0,
+                $SLIDE-HEIGHT - $header-height,
+                $SLIDE-WIDTH,
+                $header-height,
+            );
+
+            .Fill;
+        }
+
         my @lines = layout-slide(
             $slide,
             :$body-font,
         );
 
+        my Str $heading = '';
+
+        for @lines -> $line {
+            if ($line<font> // '') eq 'heading' {
+                $heading = $line<text> // '';
+                last;
+            }
+        }
+
+        if $heading.chars {
+            my Numeric $heading-size = 28;
+
+            my Numeric $heading-width = $heading-font.stringwidth(
+                $heading,
+                $heading-size,
+            );
+
+            my Numeric $heading-x =
+            ($SLIDE-WIDTH - $heading-width) / 2;
+
+            my Numeric $heading-y =
+            $SLIDE-HEIGHT - 47;
+
+            $page.graphics: {
+                .text: {
+                    .font = $heading-font, $heading-size;
+                    .FillColor = :DeviceRGB[1, 1, 1];
+                    .text-position = $heading-x, $heading-y;
+                    .say: $heading;
+                }
+            }
+        }
+
         $page.text: {
             for @lines -> %line {
                 next if (%line<type> // '') eq 'image';
+                next if (%line<font> // '') eq 'heading';
 
                 .font = %fonts{%line<font>}, %line<size>;
                 .text-position = %line<x>, %line<y>;
@@ -236,7 +287,7 @@ sub render-slides(
                     $image-path.Str
                 );
 
-                my Numeric $width = %line<max-width>;
+                my Numeric $width  = %line<max-width>;
                 my Numeric $height = $width * $image.height / $image.width;
 
                 if $height > %line<max-height> {
