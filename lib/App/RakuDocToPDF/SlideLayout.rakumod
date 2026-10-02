@@ -10,8 +10,43 @@ use PDF::XObject::Image;
 constant $SLIDE-WIDTH  = 792;
 constant $SLIDE-HEIGHT = 612;
 
+sub wrap-text(
+    Str $text,
+    PDF::Content::FontObj $font,
+    Numeric $font-size,
+    Numeric $max-width,
+    --> Array
+) {
+    my @lines;
+    my Str $line = '';
+
+    for $text.words -> Str $word {
+        my Str $candidate = $line.chars
+            ?? "$line $word"
+            !! $word;
+
+        my Numeric $width = $font.stringwidth(
+            $candidate,
+            $font-size,
+        );
+
+        if $width <= $max-width {
+            $line = $candidate;
+        }
+        else {
+            @lines.push: $line if $line.chars;
+            $line = $word;
+        }
+    }
+
+    @lines.push: $line if $line.chars;
+
+    return @lines.Array;
+}
+
 sub layout-slide(
     $slide,
+    PDF::Content::FontObj :$body-font!,
     Numeric :$slide-height = $SLIDE-HEIGHT,
     Numeric :$margin-left = 54,
     Numeric :$margin-top = 54,
@@ -40,26 +75,67 @@ sub layout-slide(
             $y -= 48;
         }
         elsif $type eq 'paragraph' {
-            @lines.push: {
-                text => $text,
-                font => 'body',
-                size => 18,
-                x    => $margin-left,
-                y    => $y,
-            };
+            my Numeric $font-size = 18;
+            my Numeric $max-width =
+            $SLIDE-WIDTH - (2 * $margin-left);
 
-            $y -= 30;
+            my @wrapped = wrap-text(
+                $text,
+                $body-font,
+                $font-size,
+                $max-width,
+            );
+
+            for @wrapped -> Str $line {
+                @lines.push: {
+                    text => $line,
+                    font => 'body',
+                    size => $font-size,
+                    x    => $margin-left,
+                    y    => $y,
+                };
+
+                $y -= 24;
+            }
+
+            $y -= 6;
         }
         elsif $type eq 'item' {
-            @lines.push: {
-                text => '- ' ~ $text,
-                font => 'body',
-                size => 18,
-                x    => $margin-left + 24,
-                y    => $y,
-            };
 
-            $y -= 30;
+            my Numeric $font-size = 18;
+            my Numeric $item-x = $margin-left + 24;
+            my Numeric $max-width =
+            $SLIDE-WIDTH - $item-x - $margin-left;
+
+            my @wrapped = wrap-text(
+                $text,
+                $body-font,
+                $font-size,
+                $max-width - 18,
+            );
+
+            my Bool $first = True;
+
+            for @wrapped -> Str $line {
+                my Str $output = $first
+                ?? '- ' ~ $line
+                !! $line;
+
+                @lines.push: {
+                    text => $output,
+                    font => 'body',
+                    size => $font-size,
+                    x    => $first
+                         ?? $item-x
+                         !! $item-x + 18,
+                    y    => $y,
+                };
+
+                $first = False;
+                $y -= 24;
+            }
+
+            $y -= 6;
         }
         elsif $type eq 'code' {
             @lines.push: {
@@ -115,6 +191,7 @@ sub render-slides(
         code    => $code-font,
     );
 
+
     my Int $num-slides = $deck<slides>.elems;
 
     for 0 ..^ $num-slides -> Int $i {
@@ -128,7 +205,10 @@ sub render-slides(
             $SLIDE-HEIGHT,
         ];
 
-        my @lines = layout-slide($slide);
+        my @lines = layout-slide(
+            $slide,
+            :$body-font,
+        );
 
         $page.text: {
             for @lines -> %line {

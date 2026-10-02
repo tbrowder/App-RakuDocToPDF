@@ -280,16 +280,13 @@ Tom Browder <tbrowder@acm.org>
 This library is free software; you may redistribute it or modify it
 under the Artistic License 2.0.
 
+=end pod
+
 =head1 SLIDE EXAMPLE WITH IMAGES
 
-The C<examples/why-linux> directory contains a complete 
-presentation reconstructed from an older PDF slide deck.  
-It consists of one RakuDoc source file and two PNG images.
+The C<examples/why-linux> directory contains a complete presentation reconstructed from an older PDF slide deck.  It consists of one RakuDoc source file and two PNG images.
 
-The RakuDoc source uses the standalone C<=slide> marker to 
-begin each slide and C<=image> to place an image on a slide.  
-Image paths are resolved relative to the RakuDoc source file.  
-For example:
+The RakuDoc source uses the standalone C<=slide> marker to begin each slide and C<=image> to place an image on a slide.  Image paths are resolved relative to the RakuDoc source file.  For example:
 
 =begin code
 =slide
@@ -313,11 +310,9 @@ use App::RakuDocToPDF;
 
 rakudoc-to-pdf(
     'examples/why-linux/why-linux.rakudoc',
-    :output<examples/why-linux/why-linux.pdf>,
+    :output<why-linux.pdf>,
     :style<slides>,
 );
 =end code
 
 The generated PDF is deliberately not stored in the distribution.  It can be regenerated from the RakuDoc and PNG source files whenever needed.
-
-=end pod
