@@ -48,13 +48,17 @@ sub wrap-text(
 sub layout-slide(
     $slide,
     PDF::Content::FontObj :$body-font!,
+    Bool :$title-slide = False,
     Numeric :$slide-height = $SLIDE-HEIGHT,
     Numeric :$margin-left = 54,
     Numeric :$margin-top = 54,
     --> Array
 ) is export {
     my @lines;
-    my Numeric $y = $slide-height - $margin-top;
+
+    my Numeric $y = $title-slide
+        ?? 315
+        !! $slide-height - $margin-top;
 
     my Int $num-blocks = $slide<blocks>.elems;
 
@@ -88,11 +92,22 @@ sub layout-slide(
             );
 
             for @wrapped -> Str $line {
+                my Numeric $x = $margin-left;
+
+                if $title-slide {
+                    my Numeric $width = $body-font.stringwidth(
+                        $line,
+                        $font-size,
+                    );
+
+                    $x = ($SLIDE-WIDTH - $width) / 2;
+                }
+
                 @lines.push: {
                     text => $line,
                     font => 'body',
                     size => $font-size,
-                    x    => $margin-left,
+                    x    => $x,
                     y    => $y,
                 };
 
@@ -199,6 +214,8 @@ sub render-slides(
         my $slide = $deck<slides>[$i];
         my PDF::Page $page = $pdf.add-page;
 
+        my Bool $title-slide = $i == 0;
+
         $page.media-box = [
             0,
             0,
@@ -208,13 +225,18 @@ sub render-slides(
 
         my Numeric $header-height = 72;
 
+        my Numeric $header-bottom = $title-slide
+            ?? 360
+            !! $SLIDE-HEIGHT - $header-height;
+
+        # blue bar graphics
         $page.graphics: {
 
             .FillColor = :DeviceRGB[0.267, 0.447, 0.769];
 
             .Rectangle(
                 0,
-                $SLIDE-HEIGHT - $header-height,
+                $header-bottom,
                 $SLIDE-WIDTH,
                 $header-height,
             );
@@ -222,9 +244,11 @@ sub render-slides(
             .Fill;
         }
 
+
         my @lines = layout-slide(
             $slide,
             :$body-font,
+            :$title-slide,
         );
 
         my Str $heading = '';
@@ -248,7 +272,7 @@ sub render-slides(
             ($SLIDE-WIDTH - $heading-width) / 2;
 
             my Numeric $heading-y =
-            $SLIDE-HEIGHT - 47;
+            $header-bottom + 25;
 
             $page.graphics: {
                 .text: {
