@@ -1,0 +1,22 @@
+=begin drawing
+
+page media=Letter orientation=landscape margin=0.5in
+
+grid columns=11 line-width=0.75pt
+
+rows 1in 1in repeat=0.375in fill
+
+=end drawing
+
+=finish
+Letter landscape:       792 x 612 pt
+margin:                   36 pt
+usable width:            720 pt = 10"
+usable height:           540 pt = 7.5"
+
+columns:                    11
+column width:        65.4545 pt
+
+first row:                 72 pt
+second row:                72 pt
+remaining spacing:         27 pt

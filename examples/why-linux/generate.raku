@@ -8,6 +8,20 @@ my IO::Path $top  = $here.parent.parent;
 my IO::Path $input = $here.add('why-linux.rakudoc');
 my IO::Path $output = $top.add('why-linux.pdf');
 
+if 1 {
+    $output = "why-linux.pdf".IO;
+}
+
+if 0 {
+    print qq:to/HERE/
+    DEBUG:
+        \$here  :  $here
+        \$top   :  $top
+        \$input :  $input
+        \$output:  $output
+    HERE
+}
+
 rakudoc-to-pdf(
     $input,
     :$output,

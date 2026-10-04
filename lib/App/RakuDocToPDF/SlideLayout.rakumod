@@ -51,16 +51,18 @@ sub layout-slide(
     Bool :$title-slide = False,
     Numeric :$slide-height = $SLIDE-HEIGHT,
     Numeric :$margin-left = 54,
-    Numeric :$margin-top = 54,
+    Numeric :$margin-top  = 54,
     --> Array
 ) is export {
     my @lines;
 
     my Numeric $y = $title-slide
-        ?? 315
+        ?? 300
         !! $slide-height - $margin-top;
 
     my Int $num-blocks = $slide<blocks>.elems;
+
+    my Bool $first-paragraph = True;
 
     for 0 ..^ $num-blocks -> Int $i {
         my $block = $slide<blocks>[$i];
@@ -80,7 +82,29 @@ sub layout-slide(
             $y -= 48;
         }
         elsif $type eq 'paragraph' {
+            if $title-slide and $first-paragraph {
+                @lines.push: {
+                    text => $text,
+                    font => 'subtitle',
+                    size => 20,
+                };
+
+                $first-paragraph = False;
+                next;
+            }
+
+            $first-paragraph = False;
+
             my Numeric $font-size = 18;
+
+            my Str $subtitle = '';
+
+            for @lines -> $line {
+                if ($line<font> // '') eq 'subtitle' {
+                    $subtitle = $line<text> // '';
+                    last;
+                }
+            }
             my Numeric $max-width =
             $SLIDE-WIDTH - (2 * $margin-left);
 
@@ -223,7 +247,7 @@ sub render-slides(
             $SLIDE-HEIGHT,
         ];
 
-        my Numeric $header-height = 72;
+        my Numeric $header-height = 54;
 
         my Numeric $header-bottom = $title-slide
             ?? 360
@@ -251,7 +275,8 @@ sub render-slides(
             :$title-slide,
         );
 
-        my Str $heading = '';
+        my Str $heading  = '';
+        my Str $subtitle = '';
 
         for @lines -> $line {
             if ($line<font> // '') eq 'heading' {
@@ -259,9 +284,17 @@ sub render-slides(
                 last;
             }
         }
+        for @lines -> $line {
+            if ($line<font> // '') eq 'subtitle' {
+                $subtitle = $line<text> // '';
+                last;
+            }
+        }
 
         if $heading.chars {
-            my Numeric $heading-size = 28;
+            my Numeric $heading-size = $title-slide
+            ?? 40
+            !! 28;
 
             my Numeric $heading-width = $heading-font.stringwidth(
                 $heading,
@@ -271,8 +304,9 @@ sub render-slides(
             my Numeric $heading-x =
             ($SLIDE-WIDTH - $heading-width) / 2;
 
-            my Numeric $heading-y =
-            $header-bottom + 25;
+            my Numeric $heading-y = $title-slide
+            ?? $header-bottom + 91
+            !! $header-bottom + 16;
 
             $page.graphics: {
                 .text: {
@@ -284,10 +318,35 @@ sub render-slides(
             }
         }
 
+        if $title-slide and $subtitle.chars {
+            my Numeric $subtitle-size = 20;
+
+            my Numeric $subtitle-width = $heading-font.stringwidth(
+                $subtitle,
+                $subtitle-size,
+            );
+
+            my Numeric $subtitle-x =
+            ($SLIDE-WIDTH - $subtitle-width) / 2;
+
+            my Numeric $subtitle-y =
+            $heading-y - 34;
+
+            $page.graphics: {
+                .text: {
+                    .font = $heading-font, $subtitle-size;
+                    .FillColor = :DeviceRGB[1, 1, 1];
+                    .text-position = $subtitle-x, $subtitle-y;
+                    .say: $subtitle;
+                }
+            }
+        }
+
         $page.text: {
             for @lines -> %line {
                 next if (%line<type> // '') eq 'image';
                 next if (%line<font> // '') eq 'heading';
+                next if (%line<font> // '') eq 'subtitle';
 
                 .font = %fonts{%line<font>}, %line<size>;
                 .text-position = %line<x>, %line<y>;
