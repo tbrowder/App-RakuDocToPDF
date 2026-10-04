@@ -18,6 +18,11 @@
   "provides": {
     "App::RakuDocToPDF": "lib/App/RakuDocToPDF.rakumod",
     "App::RakuDocToPDF::DocumentType": "lib/App/RakuDocToPDF/DocumentType.rakumod",
+    "App::RakuDocToPDF::Drawing::Layout": "lib/App/RakuDocToPDF/Drawing/Layout.rakumod",
+    "App::RakuDocToPDF::Drawing::Model": "lib/App/RakuDocToPDF/Drawing/Model.rakumod",
+    "App::RakuDocToPDF::Drawing::Parser": "lib/App/RakuDocToPDF/Drawing/Parser.rakumod",
+    "App::RakuDocToPDF::Drawing::Renderer": "lib/App/RakuDocToPDF/Drawing/Renderer.rakumod",
+    "App::RakuDocToPDF::Drawing::Units": "lib/App/RakuDocToPDF/Drawing/Units.rakumod",
     "App::RakuDocToPDF::Layout": "lib/App/RakuDocToPDF/Layout.rakumod",
     "App::RakuDocToPDF::Media": "lib/App/RakuDocToPDF/Media.rakumod",
     "App::RakuDocToPDF::RakuASTReader": "lib/App/RakuDocToPDF/RakuASTReader.rakumod",

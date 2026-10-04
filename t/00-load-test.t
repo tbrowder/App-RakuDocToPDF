@@ -8,6 +8,11 @@ my @modules = <
     App::RakuDocToPDF::RakuASTReader
     App::RakuDocToPDF::SlideMaker
     App::RakuDocToPDF::SlideLayout
+    App::RakuDocToPDF::Drawing::Layout 
+    App::RakuDocToPDF::Drawing::Model
+    App::RakuDocToPDF::Drawing::Parser
+    App::RakuDocToPDF::Drawing::Renderer
+    App::RakuDocToPDF::Drawing::Units
 >;
 
 plan @modules.elems;

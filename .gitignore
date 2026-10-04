@@ -1,3 +1,6 @@
 .precomp/
 /App-RakuDocToPDF-*
 t.out
+t.err
+why-linux.pdf
+examples/why-linux/why-linux.pdf
