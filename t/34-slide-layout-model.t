@@ -2,6 +2,8 @@ use v6.d;
 
 use Test;
 
+use PDF::API6;
+
 use App::RakuDocToPDF::SlideLayout;
 
 my $heading = {
@@ -40,7 +42,17 @@ my $slide = {
     blocks => @blocks.Array,
 };
 
-my @lines = layout-slide($slide);
+my PDF::API6 $pdf .= new;
+
+my $body-font = $pdf.core-font(
+    'Times-Roman'
+);
+
+my @lines = layout-slide(
+    $slide,
+    :$body-font,
+);
+
 
 is @lines.elems, 4,
     'four slide lines produced';
