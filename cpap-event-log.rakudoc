@@ -1,3 +1,5 @@
+=begin pod
+
 =begin drawing
 
 page media=Letter orientation=landscape margin=0.5in
@@ -7,3 +9,5 @@ grid columns=11 line-width=0.75pt
 rows 1in 1in repeat=0.375in fill
 
 =end drawing
+
+=end pod

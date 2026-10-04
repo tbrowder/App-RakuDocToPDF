@@ -1,6 +1,7 @@
 unit module App::RakuDocToPDF::Drawing::Renderer;
 
 use PDF::API6;
+use PDF::Page;
 
 use App::RakuDocToPDF::Drawing::Layout;
 use App::RakuDocToPDF::Drawing::Model;
@@ -13,22 +14,22 @@ sub render-drawing(
     my ($page-width, $page-height) =
         page-size($spec.page);
 
-    my $left =
+    my Numeric $left =
         $spec.page.margin;
 
-    my $right =
+    my Numeric $right =
         $page-width - $spec.page.margin;
 
-    my $bottom =
+    my Numeric $bottom =
         $spec.page.margin;
 
-    my $top =
+    my Numeric $top =
         $page-height - $spec.page.margin;
 
-    my $width =
+    my Numeric $width =
         $right - $left;
 
-    my $height =
+    my Numeric $height =
         $top - $bottom;
 
     my PDF::API6 $pdf .= new;
@@ -40,51 +41,47 @@ sub render-drawing(
         $page-height,
     ];
 
-    my $page = $pdf.add-page;
+    my PDF::Page $page = $pdf.add-page;
 
-    $page.graphics: -> $gfx {
-        $gfx.LineWidth =
+    $page.graphics: {
+        .LineWidth =
             $spec.grid.line-width;
 
-        # Outer border.
-
-        $gfx.Rectangle(
+        .Rectangle(
             $left,
             $bottom,
             $width,
             $height,
         );
 
-        # Vertical column rules.
-
         for vertical-rules($spec) -> $x {
-            $gfx.MoveTo(
+            .MoveTo(
                 $x,
                 $bottom,
             );
 
-            $gfx.LineTo(
+            .LineTo(
                 $x,
                 $top,
             );
         }
 
-        # Horizontal row rules.
-
         for horizontal-rules($spec) -> $y {
-            $gfx.MoveTo(
+            .MoveTo(
                 $left,
                 $y,
             );
 
-            $gfx.LineTo(
+            .LineTo(
                 $right,
                 $y,
             );
         }
 
-        $gfx.Stroke;
+        .Stroke;
     }
+
+    say "page count before save: {$pdf.page-count}";
 
     $pdf.save-as($output);
 
