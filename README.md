@@ -264,7 +264,7 @@ The script is equivalent to:
 
     rakudoc-to-pdf(
         'examples/why-linux/why-linux.rakudoc',
-        :output<examples/why-linux/why-linux.pdf>,
+        :output<why-linux.pdf>,
         :style<slides>,
     );
 

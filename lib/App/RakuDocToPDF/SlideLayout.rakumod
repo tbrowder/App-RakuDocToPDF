@@ -284,12 +284,15 @@ sub render-slides(
                 last;
             }
         }
+
         for @lines -> $line {
             if ($line<font> // '') eq 'subtitle' {
                 $subtitle = $line<text> // '';
                 last;
             }
         }
+
+        my Numeric $heading-y = 0;
 
         if $heading.chars {
             my Numeric $heading-size = $title-slide
@@ -329,8 +332,7 @@ sub render-slides(
             my Numeric $subtitle-x =
             ($SLIDE-WIDTH - $subtitle-width) / 2;
 
-            my Numeric $subtitle-y =
-            $heading-y - 34;
+            my Numeric $subtitle-y = $heading-y - 34;
 
             $page.graphics: {
                 .text: {
