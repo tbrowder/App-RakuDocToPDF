@@ -7,6 +7,8 @@ use PDF::Content::FontObj;
 use PDF::Page;
 
 use App::RakuDocToPDF::DocumentType;
+use App::RakuDocToPDF::Drawing::Parser;
+use App::RakuDocToPDF::Drawing::Renderer;
 use App::RakuDocToPDF::Layout;
 use App::RakuDocToPDF::Media;
 use App::RakuDocToPDF::RakuASTReader;
@@ -51,8 +53,9 @@ sub normalize-style(
 
     return $style if $style eq 'document';
     return $style if $style eq 'slides';
+    return $style if $style eq 'drawing';
 
-    die "Unknown PDF style '$style'. Expected one of: document, slides.";
+    die "Unknown PDF style '$style'. Expected one of: document, slides, drawing.";
 }
 
 sub rakudoc-to-pdf(
@@ -84,6 +87,33 @@ sub rakudoc-to-pdf(
 
     #my @blocks = read-rakudoc($source);
     my @blocks = read-rakudoc-rakuast($source);
+
+    if $pdf-style eq 'drawing' {
+        my @drawing-blocks;
+
+        for @blocks -> %block {
+            if %block<type> eq 'drawing' {
+                @drawing-blocks.push(%block);
+            }
+        }
+
+        die "Drawing style requires one '=begin drawing' block."
+            unless @drawing-blocks.elems;
+
+        die "Drawing style currently supports only one drawing block."
+            if @drawing-blocks.elems > 1;
+
+        my $spec = parse-drawing(
+            @drawing-blocks[0]<text>
+        );
+
+        render-drawing(
+            $spec,
+            :output($destination.Str),
+        );
+
+        return $destination;
+    }
 
     my @issues = validate-document(
         @blocks,

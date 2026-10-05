@@ -164,6 +164,21 @@ sub linearize-rakudoc(
                     :text(clean-text($text)),
                 );
             }
+            elsif $type eq 'drawing' {
+                my @parts;
+
+                for $node.paragraphs -> $paragraph {
+                    @parts.push(
+                        clean-text($paragraph.Str)
+                    );
+                }
+
+                add-block(
+                    'drawing',
+                    :depth($heading-depth),
+                    :text(@parts.join("\n")),
+                );
+            }
             return;
         }
 

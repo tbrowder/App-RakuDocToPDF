@@ -81,8 +81,6 @@ sub render-drawing(
         .Stroke;
     }
 
-    say "page count before save: {$pdf.page-count}";
-
     $pdf.save-as($output);
 
     return;

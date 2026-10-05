@@ -307,7 +307,7 @@ sub render-slides(
             my Numeric $heading-x =
             ($SLIDE-WIDTH - $heading-width) / 2;
 
-            $heading-y = $title-slide
+            my Numeric $heading-y = $title-slide
             ?? $header-bottom + 91
             !! $header-bottom + 16;
 
