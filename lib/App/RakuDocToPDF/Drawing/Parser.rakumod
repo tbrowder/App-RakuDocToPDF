@@ -31,12 +31,20 @@ sub parse-drawing(
     my $columns;
     my $line-width = points('0.75pt');
 
+    my @column-widths;
     my @fixed-row-heights;
     my $repeat-row-height;
     my $fill = False;
 
-    for $source.lines -> $raw-line {
-        my $line = $raw-line.trim;
+    my @row-labels;
+
+    my @lines = $source.lines;
+    my Int $index = 0;
+
+    while $index < @lines.elems {
+        my Str $line = @lines[$index].trim;
+
+        ++$index;
 
         next unless $line.chars;
         next if $line.starts-with('#');
@@ -48,29 +56,41 @@ sub parse-drawing(
             when 'page' {
                 my %options = get-options(@parts);
 
-                $media =
-                    %options<media>
-                        if %options<media>:exists;
+                if %options<media>:exists {
+                    $media = %options<media>;
+                }
 
-                $orientation =
-                    %options<orientation>
-                        if %options<orientation>:exists;
+                if %options<orientation>:exists {
+                    $orientation = %options<orientation>;
+                }
 
-                $margin =
-                    points(%options<margin>)
-                        if %options<margin>:exists;
+                if %options<margin>:exists {
+                    $margin = points(%options<margin>);
+                }
             }
 
             when 'grid' {
                 my %options = get-options(@parts);
 
-                $columns =
-                    %options<columns>.Int
-                        if %options<columns>:exists;
+                if %options<columns>:exists {
+                    $columns = %options<columns>.Int;
+                }
 
-                $line-width =
-                    points(%options<line-width>)
-                        if %options<line-width>:exists;
+                if %options<line-width>:exists {
+                    $line-width = points(%options<line-width>);
+                }
+
+                if %options<widths>:exists {
+                    @column-widths = ();
+
+                    for %options<widths>.split(',') -> $width {
+                        @column-widths.push(
+                            points($width.trim)
+                        );
+                    }
+
+                    $columns = @column-widths.elems;
+                }
             }
 
             when 'rows' {
@@ -95,14 +115,65 @@ sub parse-drawing(
                 }
             }
 
+            when 'row-labels' {
+                die "row-labels requires a row number"
+                    unless @parts.elems;
+
+                my Int $row = @parts[0].Int;
+
+                die "row number must be greater than zero"
+                    unless $row > 0;
+
+                my @labels;
+                my Bool $closed = False;
+
+                while $index < @lines.elems {
+                    my Str $label-line =
+                        @lines[$index].trim;
+
+                    ++$index;
+
+                    next unless $label-line.chars;
+                    next if $label-line.starts-with('#');
+
+                    if $label-line eq 'end-row-labels' {
+                        $closed = True;
+                        last;
+                    }
+
+                    @labels.push($label-line);
+                }
+
+                die "row-labels block for row $row is missing end-row-labels"
+                    unless $closed;
+
+                @row-labels.push(
+                    RowLabelsSpec.new(
+                        :$row,
+                        labels => @labels,
+                    )
+                );
+            }
+
             default {
                 die "Unknown drawing command '$command'";
             }
         }
     }
 
-    die 'A grid must specify columns'
+    die 'A grid must specify columns or widths'
         unless $columns.defined;
+
+    die 'A grid must contain at least one column'
+        unless $columns > 0;
+
+    for @row-labels -> $row-label-spec {
+        my Int $count =
+            $row-label-spec.labels.elems;
+
+        die "row-labels for row {$row-label-spec.row} has $count labels but grid has $columns columns"
+            unless $count == $columns;
+    }
 
     my $page = PageSpec.new(
         :$media,
@@ -113,9 +184,11 @@ sub parse-drawing(
     my $grid = GridSpec.new(
         :$columns,
         :$line-width,
+        :@column-widths,
         :@fixed-row-heights,
         :$repeat-row-height,
         :$fill,
+        :@row-labels,
     );
 
     return DrawingSpec.new(
