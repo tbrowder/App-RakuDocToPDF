@@ -1,6 +1,8 @@
 Revision history for App::RakuDocToPDF
 
 {{$NEXT}}
+    - Add slide making capability with the ? mode
+    - Add form drawing capability with the ? mode
 
 0.0.3  2026-09-12T17:26:23-05:00
     - Removed now unneeded App::RakuDocToPDF::Reader module

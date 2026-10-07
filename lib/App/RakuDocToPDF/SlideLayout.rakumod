@@ -234,6 +234,8 @@ sub render-slides(
 
     my Int $num-slides = $deck<slides>.elems;
 
+    my Bool $first-paragraph = True;
+
     for 0 ..^ $num-slides -> Int $i {
         my $slide = $deck<slides>[$i];
         my PDF::Page $page = $pdf.add-page;
@@ -247,7 +249,7 @@ sub render-slides(
             $SLIDE-HEIGHT,
         ];
 
-        my Numeric $header-height = 54;
+        my Numeric $header-height = 144;
 
         my Numeric $header-bottom = $title-slide
             ?? 360
