@@ -5,6 +5,8 @@ use App::RakuDocToPDF;
 my IO::Path $here = $?FILE.IO.parent;
 my IO::Path $top  = $here.parent.parent;
 
+# note this rakudoc version has been further modified
+# after the original conversion from PDF
 my IO::Path $input = $here.add('why-linux.rakudoc');
 my IO::Path $output = $top.add('why-linux.pdf');
 

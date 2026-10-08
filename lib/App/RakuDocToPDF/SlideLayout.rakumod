@@ -2,6 +2,7 @@ use v6.d;
 
 unit module App::RakuDocToPDF::SlideLayout;
 
+use PDF::Annot::Link;
 use PDF::API6;
 use PDF::Content::FontObj;
 use PDF::Page;
@@ -228,7 +229,11 @@ sub render-slides(
 
     for 0 ..^ $num-slides -> Int $i {
         my $slide = $deck<slides>[$i];
+
         my PDF::Page $page = $pdf.add-page;
+
+        # debug
+        # end debug
 
         my Bool $title-slide = $i == 0;
 
@@ -333,8 +338,6 @@ sub render-slides(
                     - ($heading-size * 0.72 / 2)
                     - ($heading-size * 0.20);
 
-
-
             $page.graphics: {
                 .text: {
                     .font = $heading-font, $heading-size;
@@ -380,6 +383,30 @@ sub render-slides(
             }
         }
 
+        # debug
+        my Str $uri = 'https://raku.org';
+        my @Border = 0, 0, 0;
+
+        # Temporary test rectangle: 2 inches wide, 20 points high.
+        my @Rect = 54, 300, 198, 320;
+
+
+        my PDF::Action::URI $action = $pdf.action: :$uri;
+$page.graphics: {
+    .StrokeColor = :DeviceRGB[1, 0, 0];
+    .LineWidth = 2;
+    .Rectangle(54, 300, 144, 20);
+    .Stroke;
+}
+        my PDF::Annot::Link $link = $pdf.annotation(
+            :$page,
+            :$action,
+            :@Border,
+            :@Rect,
+        );
+
+        # debug
+
         for @lines -> %line {
             next unless (%line<type> // '') eq 'image';
 
@@ -391,12 +418,13 @@ sub render-slides(
             die "Slide image '$image-path' does not exist."
                 unless $image-path.e;
 
+
             $page.graphics: {
                 my PDF::XObject::Image $image = .load-image(
                     $image-path.Str
                 );
 
-#
+
                 my Numeric $width  = %line<max-width>;
                 my Numeric $height = $width * $image.height / $image.width;
 
@@ -404,7 +432,7 @@ sub render-slides(
                     $height = %line<max-height>;
                     $width = $height * $image.width / $image.height;
                 }
-#
+
 
                 if $figure-slide {
                     my Numeric $extra-height = 108;
