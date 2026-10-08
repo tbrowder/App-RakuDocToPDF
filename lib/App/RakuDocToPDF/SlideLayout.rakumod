@@ -58,7 +58,7 @@ sub layout-slide(
 
     my Numeric $y = $title-slide
         ?? 300
-        !! $slide-height - $margin-top;
+        !! $slide-height - $margin-top - 198;
 
     my Int $num-blocks = $slide<blocks>.elems;
 
@@ -78,8 +78,6 @@ sub layout-slide(
                 x    => $margin-left,
                 y    => $y,
             };
-
-            $y -= 48;
         }
         elsif $type eq 'paragraph' {
             if $title-slide and $first-paragraph {
@@ -97,14 +95,6 @@ sub layout-slide(
 
             my Numeric $font-size = 18;
 
-            my Str $subtitle = '';
-
-            for @lines -> $line {
-                if ($line<font> // '') eq 'subtitle' {
-                    $subtitle = $line<text> // '';
-                    last;
-                }
-            }
             my Numeric $max-width =
             $SLIDE-WIDTH - (2 * $margin-left);
 
@@ -212,6 +202,7 @@ sub render-slides(
     IO::Path :$base-dir = '.'.IO,
     --> IO::Path
 ) is export {
+
     my PDF::API6 $pdf .= new;
     $pdf.id = $pdf-id if $pdf-id.defined;
 
@@ -231,7 +222,6 @@ sub render-slides(
         code    => $code-font,
     );
 
-
     my Int $num-slides = $deck<slides>.elems;
 
     my Bool $first-paragraph = True;
@@ -242,6 +232,15 @@ sub render-slides(
 
         my Bool $title-slide = $i == 0;
 
+        my Bool $figure-slide = False;
+
+        for $slide<blocks>.list -> $block {
+            if ($block<type> // '') eq 'image' {
+                $figure-slide = True;
+                last;
+            }
+        }
+
         $page.media-box = [
             0,
             0,
@@ -249,7 +248,9 @@ sub render-slides(
             $SLIDE-HEIGHT,
         ];
 
-        my Numeric $header-height = 144;
+        my Numeric $header-height = $title-slide
+            ?? 144
+            !! ($figure-slide ?? 126 !! 144);
 
         my Numeric $header-bottom = $title-slide
             ?? 360
@@ -270,15 +271,29 @@ sub render-slides(
             .Fill;
         }
 
-
         my @lines = layout-slide(
             $slide,
             :$body-font,
             :$title-slide,
         );
 
+        if $figure-slide {
+            for @lines -> $line {
+                next if ($line<font> // '') eq 'heading';
+                next if ($line<font> // '') eq 'subtitle';
+
+                if ($line<type> // '') eq 'image' {
+                    $line<top> += 90;
+                    $line<x> += 36;
+                }
+                else {
+                    $line<y> += 90;
+                    $line<x> += 36;
+                }
+            }
+        }
+
         my Str $heading  = '';
-        my Str $subtitle = '';
 
         for @lines -> $line {
             if ($line<font> // '') eq 'heading' {
@@ -286,6 +301,8 @@ sub render-slides(
                 last;
             }
         }
+
+        my Str $subtitle = '';
 
         for @lines -> $line {
             if ($line<font> // '') eq 'subtitle' {
@@ -309,9 +326,14 @@ sub render-slides(
             my Numeric $heading-x =
             ($SLIDE-WIDTH - $heading-width) / 2;
 
-            my Numeric $heading-y = $title-slide
-            ?? $header-bottom + 91
-            !! $header-bottom + 16;
+            $heading-y = $title-slide
+                ?? $header-bottom + 91
+                !! $header-bottom
+                    + ($header-height / 2)
+                    - ($heading-size * 0.72 / 2)
+                    - ($heading-size * 0.20);
+
+
 
             $page.graphics: {
                 .text: {
@@ -374,12 +396,25 @@ sub render-slides(
                     $image-path.Str
                 );
 
+#
                 my Numeric $width  = %line<max-width>;
                 my Numeric $height = $width * $image.height / $image.width;
 
                 if $height > %line<max-height> {
                     $height = %line<max-height>;
                     $width = $height * $image.width / $image.height;
+                }
+#
+
+                if $figure-slide {
+                    my Numeric $extra-height = 108;
+
+                    my Numeric $new-height = $height + $extra-height;
+
+                    my Numeric $scale = $new-height / $height;
+
+                    $height = $new-height;
+                    $width *= $scale;
                 }
 
                 my Numeric $y = %line<top> - $height;
