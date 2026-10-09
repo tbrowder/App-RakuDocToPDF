@@ -13,7 +13,7 @@ Raku Computer Language Core Developer
 
 L<https://Raku.org>
 
-2024-05-11
+2026-10-09
 
 =slide
 =head1 Background
@@ -27,11 +27,11 @@ L<https://Raku.org>
 =slide
 =head1 Background
 
-=item My interests include Raku (formerly known as Perl 6), PostScript, PDF, and C++ programming and the whole world of Linux and Free and Open Source Freeware in General.
+=item My interests include Raku (formerly known as Perl 6), PostScript, PDF, and C++ programming, and the whole world of Linux and Free and Open Source Freeware in General.
 
-=item I am not a windows expert, but I am pretty computer savy
+=item I am not a windows expert, but I am pretty computer savvy.
 
-=item Most of what I will say is opinionated, but based on many years of professional experience in the digital world
+=item Most of what I will say is opinionated, but based on many years of professional experience in the digital world.
 
 =slide
 =head1 Hypothesis
@@ -97,7 +97,7 @@ Linux:
 
 =item Performs upgrades only if you want it to
 
-=item Is unparalleled for the scientist or engineer: a powerful, “programmable calculator
+=item Is unparalleled for the scientist or engineer: a powerful, “programmable calculator"
 
 =slide
 =head1 Linux vs. Windows: Other views
@@ -133,7 +133,7 @@ On Windows or Mac:
 
 =item Use Putty on Windows or a terminal app on an iPad to connect to a cloud server (as cheap as $2.50 per month)
 
-=item Install the Windows Ubuntu subsystem
+=item Install (or activate) the Windows Ubuntu subsystem (WSL)
 
 =item Install VirtualBox (free) to run a Linux Virtual Machine (VM)
 
@@ -150,8 +150,6 @@ Best choice
 
 =item Use a single OS, native installation
 
-=item Use a Chromebook
-
 =slide
 =head1 Linux comes in many flavors
 
@@ -162,9 +160,9 @@ See L<https://distrowatch.com> for lots of information about popularity, downloa
 =slide
 =head1 Linux comes in many flavors (cont.)
 
-My Linux friends think Linux Mint is one of the best distros for beginners. I prefer Debian and have used it for many years (starting with Debian 4 (code named Etch) released in 2007).
+My Linux friends think Linux Mint is one of the best distros for beginners. I prefer Debian and have used it for many years (starting with Debian 4 (code named Etch) released in 2007). Its current version is Debian 13 (code named Trixie).
 
-(Note that Google moved from Ubuntu-based Linux to Debian testing circa 2018.)
+(Note that Google moved from Ubuntu-based Linux to Debian Linux circa 2018.)
 
 =slide
 =head1 Linux help?
