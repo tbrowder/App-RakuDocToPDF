@@ -384,27 +384,58 @@ sub render-slides(
         }
 
         # debug
-        my Str $uri = 'https://raku.org';
-        my @Border = 0, 0, 0;
+        # Add clickable PDF annotations for visible HTTP(S) URLs.
+        for @lines -> %line {
+            next if (%line<type> // '') eq 'image';
+            next if (%line<font> // '') eq 'heading';
+            next if (%line<font> // '') eq 'subtitle';
 
-        # Temporary test rectangle: 2 inches wide, 20 points high.
-        my @Rect = 54, 300, 198, 320;
+            my Str $text = %line<text> // '';
+            my Numeric $font-size = %line<size>;
+            my $font = %fonts{%line<font>};
 
+            for $text.match(
+                / 'http' 's'? '://' <-[\s]>+ /,
+                :g
+            ) -> $match {
+                my Str $uri = ~$match;
 
-        my PDF::Action::URI $action = $pdf.action: :$uri;
-$page.graphics: {
-    .StrokeColor = :DeviceRGB[1, 0, 0];
-    .LineWidth = 2;
-    .Rectangle(54, 300, 144, 20);
-    .Stroke;
-}
-        my PDF::Annot::Link $link = $pdf.annotation(
-            :$page,
-            :$action,
-            :@Border,
-            :@Rect,
-        );
+                # Exclude punctuation following the URL.
+                $uri ~~ s/ <[.,;:!?]>+ $ //;
 
+                next unless $uri.chars;
+
+                my Str $prefix = $text.substr(0, $match.from);
+
+                my Numeric $x = %line<x>
+                    + $font.stringwidth($prefix, $font-size);
+
+                my Numeric $width = $font.stringwidth(
+                    $uri,
+                    $font-size,
+                );
+
+                my Numeric $y = %line<y>;
+
+                my @Rect = (
+                    $x,
+                    $y - 4,
+                    $x + $width,
+                    $y + $font-size,
+                );
+
+                my @Border = 0, 0, 0;
+
+                my PDF::Action::URI $action = $pdf.action: :$uri;
+
+                my PDF::Annot::Link $link = $pdf.annotation(
+                    :$page,
+                    :$action,
+                    :@Border,
+                    :@Rect,
+                );
+            }
+        }
         # debug
 
         for @lines -> %line {
