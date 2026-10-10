@@ -7,9 +7,10 @@ my IO::Path $top  = $here.parent.parent;
 
 # note this rakudoc version has been further modified
 # after the original conversion from PDF
-my IO::Path $input = $here.add('why-linux.rakudoc');
+#my IO::Path $input = $here.add('why-linux.rakudoc');
 my IO::Path $output = $top.add('why-linux.pdf');
 
+my IO::Path $input = "./examples/why-linux/why-linux.rakudoc".IO;
 if 1 {
     $output = "why-linux.pdf".IO;
 }
