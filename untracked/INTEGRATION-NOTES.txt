@@ -1,0 +1,27 @@
+App::RakuDocToPDF drawing integration package
+
+Based on the uploaded fresh.zip.
+
+Added/changed:
+- App::RakuDocToPDF: adds :style<drawing> routing.
+- RakuASTReader: recognizes =begin drawing blocks and preserves command lines.
+- Drawing::Renderer: uses the working topical PDF::API6 graphics form.
+- bin/rakudoc2pdf: CLI with --style=drawing support (the uploaded ZIP had no bin/ directory).
+- examples/cpap-event-log.rakudoc
+- t/41-rakuast-drawing.t
+- t/42-drawing-integration.t
+
+Suggested checks:
+  rl t/41-rakuast-drawing.t
+  rl t/42-drawing-integration.t
+  bin/rakudoc2pdf examples/cpap-event-log.rakudoc --style=drawing --output=cpap-event-log.pdf
+  pdfinfo cpap-event-log.pdf | grep Pages
+
+Expected PDF page count: 1
+
+Additional drawing DSL work:
+- row-labels blocks add centered/wrapped labels to a selected row.
+- grid widths= accepts comma-separated explicit widths and infers column count.
+- explicit widths must total the usable page width.
+- t/43-drawing-row-labels.t covers heading labels.
+- t/44-drawing-column-widths.t covers explicit width geometry.

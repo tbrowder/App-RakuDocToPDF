@@ -1,0 +1,27 @@
+=begin pod
+
+=begin drawing
+
+page media=Letter orientation=landscape margin=0.5in
+
+grid columns=11 line-width=0.75pt
+
+rows 1in 1in repeat=0.375in fill
+
+row-labels 2
+Date
+How I Feel
+Sleep Score
+Time Asleep
+Time Awake
+REM Time
+Core Time
+Deep Sleep
+Score
+Usage
+Events
+end-row-labels
+
+=end drawing
+
+=end pod

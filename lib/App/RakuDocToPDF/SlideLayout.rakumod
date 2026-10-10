@@ -8,7 +8,6 @@ use PDF::Content::FontObj;
 use PDF::Page;
 use PDF::XObject::Image;
 
-
 constant $SLIDE-WIDTH  = 792;
 constant $SLIDE-HEIGHT = 612;
 
@@ -477,6 +476,16 @@ sub render-slides(
                 }
 
                 my Numeric $y = %line<top> - $height;
+
+                =begin comment
+                # for debugging
+                note "IMAGE: $image-path";
+                note "  x      = " ~ %line<x>;
+                note "  top    = " ~ %line<top>;
+                note "  width  = $width";
+                note "  height = $height";
+                note "  y      = $y";
+                =end comment
 
                 .do: $image,
                     :position[%line<x>, $y],

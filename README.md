@@ -5,7 +5,7 @@ NAME
 
 **App::RakuDocToPDF** - Provides routines to convert RakuDoc to PDF
 
-See a simple README.rakudoc example for another module at [click here](./examples/pdf/README.pdf)
+See a simple README.rakudoc example for another module at [click here ](./examples/pdf/README.pdf)
 
 SYNOPSIS
 ========

@@ -1,0 +1,26 @@
+#!/usr/bin/env raku
+
+use v6.d;
+
+use App::RakuDocToPDF;
+
+sub MAIN(
+    Str:D $input,
+    Str :$output,
+    Str :$media = 'Letter',
+    Str :$type = 'generic',
+    Str :$style = 'document',
+    --> Nil
+) {
+    my IO::Path $pdf = rakudoc-to-pdf(
+        $input,
+        :$output,
+        :$media,
+        :$type,
+        :$style,
+    );
+
+    say "Created $pdf";
+
+    return;
+}

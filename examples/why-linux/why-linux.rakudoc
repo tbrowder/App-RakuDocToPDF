@@ -52,7 +52,7 @@ L<https://Raku.org>
 =slide
 =head1 What is Linux? (cont.)
 
-=item For a much more detailed look at Linux compared to other OSs, see this link: L<https://www.lifewire.com/operating-systems-2625912>
+=item For a more detailed look at Linux compared to other OSs, see this link: L<https://www.lifewire.com/what-is-linux-2201940>. Note there is a lot of other tecnical information there, too.
 
 =slide
 =head1 Why Linux?
@@ -111,18 +111,19 @@ Other opinions:
 =slide
 =head1 Linux: Introduction
 
-Desktop empty while working at the command line
+Desktop empty of terminals. Note the pictures show analog computers.
 
-# Original slide image extracted from PDF page 11:
-# why-linux-media/linux-command-line.png
+=comment Original slide image extracted from PDF page 11:
+=image media/analog-computer.png
+
 
 =slide
 =head1 Linux: Introduction (cont.)
 
-Desktop working with windowed programs…
+Desktop working with multiple terminals for command-line use.
 
-# Original slide image extracted from PDF page 12:
-# why-linux-media/linux-windowed-programs.png
+=comment Original slide image extracted from PDF page 12:
+=image media/linux-windowed.png
 
 =slide
 =head1 Linux: How to get it

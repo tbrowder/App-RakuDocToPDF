@@ -62,13 +62,13 @@ is @lines[0]<size>, 28,
 is @lines[0]<x>, 54,
     'heading x position';
 
-is @lines[0]<y>, 558,
+is @lines[0]<y>, 360,
     'heading y position';
 
 is @lines[1]<font>, 'body',
     'paragraph uses body font';
 
-is @lines[1]<y>, 510,
+is @lines[1]<y>, 360,
     'paragraph follows heading';
 
 is @lines[2]<text>, '- First bullet item',

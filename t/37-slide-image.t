@@ -31,11 +31,11 @@ is @images.elems,
     'why-linux example contains two image blocks';
 
 is @images[0]<text>,
-    'media/linux-command-line.png',
+    'media/analog-computer.png',
     'first image path is preserved';
 
 is @images[1]<text>,
-    'media/linux-windowed-programs.png',
+    'media/linux-windowed.png',
     'second image path is preserved';
 
 my IO::Path $result = rakudoc-to-pdf(

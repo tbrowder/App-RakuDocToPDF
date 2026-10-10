@@ -1,0 +1,218 @@
+t/00-load-test.t ....................... ok
+# 
+# --- item RakuAST tree ---
+# RakuAST::StatementList.new(
+#   RakuAST::Statement::LanguageVersion.new(v6.d),
+#   RakuAST::Statement::Expression.new(
+#     expression => RakuAST::Module.new(
+#       scope => "unit",
+#       name  => RakuAST::Name.from-identifier("RakuASTItemTest"),
+#       body  => RakuAST::Block.new(
+#         body => RakuAST::Blockoid.new(
+#           RakuAST::StatementList.new(
+#             RakuAST::Doc::Block.new(
+#               type       => "pod",
+#               paragraphs => (
+#                 RakuAST::Doc::Block.new(
+#                   type        => "head",
+#                   level       => 1,
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "ITEMS\n\n",
+#                   )
+#                 ),
+#                 RakuAST::Doc::Block.new(
+#                   type        => "item",
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "First item\n\n",
+#                   )
+#                 ),
+#                 RakuAST::Doc::Block.new(
+#                   type        => "item",
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "Second item\n\n",
+#                   )
+#                 ),
+#                 RakuAST::Doc::Block.new(
+#                   type        => "head",
+#                   level       => 2,
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "NESTED\n\n",
+#                   )
+#                 ),
+#                 RakuAST::Doc::Block.new(
+#                   type        => "item",
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "Nested item\n\n",
+#                   )
+#                 ),
+#               )
+#             )
+#           )
+#         )
+#       )
+#     )
+#   )
+# )
+# --- end item RakuAST tree ---
+# 
+# 
+# --- special-directive RakuAST tree ---
+# RakuAST::StatementList.new(
+#   RakuAST::Statement::LanguageVersion.new(v6.d),
+#   RakuAST::Statement::Expression.new(
+#     expression => RakuAST::Module.new(
+#       scope => "unit",
+#       name  => RakuAST::Name.from-identifier("RakuASTSpecialTest"),
+#       body  => RakuAST::Block.new(
+#         body => RakuAST::Blockoid.new(
+#           RakuAST::StatementList.new(
+#             RakuAST::Doc::Block.new(
+#               type       => "pod",
+#               paragraphs => (
+#                 RakuAST::Doc::Block.new(
+#                   type        => "TITLE",
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "Example Document\n\n",
+#                   )
+#                 ),
+#                 RakuAST::Doc::Block.new(
+#                   type        => "SUBTITLE",
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "Example Subtitle\n\n",
+#                   )
+#                 ),
+#                 RakuAST::Doc::Block.new(
+#                   type        => "head",
+#                   level       => 1,
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "NAME\n\n",
+#                   )
+#                 ),
+#                 "Example Document\n\n",
+#                 RakuAST::Doc::Block.new(
+#                   type        => "page-break",
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "\n",
+#                   )
+#                 ),
+#                 RakuAST::Doc::Block.new(
+#                   type        => "head",
+#                   level       => 1,
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "SECOND PAGE\n\n",
+#                   )
+#                 ),
+#                 "Second page text.\n\n",
+#                 RakuAST::Doc::Block.new(
+#                   type        => "slide",
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "\n",
+#                   )
+#                 ),
+#                 RakuAST::Doc::Block.new(
+#                   type        => "head",
+#                   level       => 1,
+#                   abbreviated => True,
+#                   paragraphs  => (
+#                     "SLIDE TITLE\n\n",
+#                   )
+#                 ),
+#                 "Slide text.\n\n",
+#               )
+#             )
+#           )
+#         )
+#       )
+#     )
+#   )
+# )
+# --- end special-directive RakuAST tree ---
+# 
+# Failed test 'heading y position'
+# at t/34-slide-layout-model.t line 65
+# expected: '558'
+#      got: '360'
+# Failed test 'paragraph follows heading'
+# at t/34-slide-layout-model.t line 71
+# expected: '510'
+#      got: '360'
+# You failed 2 tests of 13
+# Failed test 'why-linux example contains two image blocks'
+# at t/37-slide-image.t line 29
+# expected: '2'
+#      got: '0'
+# Failed test 'first image path is preserved'
+# at t/37-slide-image.t line 33
+# expected: 'media/linux-command-line.png'
+#      got: (Any)
+# Failed test 'second image path is preserved'
+# at t/37-slide-image.t line 37
+# expected: 'media/linux-windowed-programs.png'
+#      got: (Any)
+# You failed 3 tests of 6
+Test failed
+  in sub test at /home/tbrowde/.raku/sources/4B118D702EC02F855AE9887854535254CF32731D (App::Mi6) line 226
+  in method cmd at /home/tbrowde/.raku/sources/4B118D702EC02F855AE9887854535254CF32731D (App::Mi6) line 129
+  in sub MAIN at /home/tbrowde/.raku/resources/145EDF5EC2F0A1339E4751DFA7E44AC3568BC5A3 line 17
+  in block <unit> at /home/tbrowde/.raku/resources/145EDF5EC2F0A1339E4751DFA7E44AC3568BC5A3 line 28
+  in sub MAIN at /home/tbrowde/.raku/bin/mi6 line 3
+  in block <unit> at /home/tbrowde/.raku/bin/mi6 line 2
+
+t/01-media.t ........................... ok
+t/03-layout.t .......................... ok
+t/04-pdf.t ............................. ok
+t/05-reproducible.t .................... ok
+t/10-document-type-integration.t ....... ok
+t/12-rakuast-reader.t .................. ok
+t/13-rakuast-linear.t .................. ok
+t/14-ast-depth.t ....................... ok
+t/15-rakust-item-inspect.t ............. ok
+t/16-rakuast-item.t .................... ok
+t/17-rakuast-special-inspect.t ......... ok
+t/18-rakuast-special.t ................. ok
+t/19-rakuast-safety.t .................. ok
+t/22-rakuast-embedded-doc.t ............ ok
+t/23-rakuast-abbreviated.t ............. ok
+t/24-rakuast-indented-code.t ........... ok
+t/25-rakuast-indented-code-multiple.t .. ok
+t/26-rakuast-code-heading-depth.t ...... ok
+t/27-rakuast-items-code-depth.t ........ ok
+t/28-rakuast-code-normalization.t ...... ok
+t/29-rakuast-unsupported-blocks.t ...... ok
+t/30-rakuast-realistic-document.t ...... ok
+t/31-slidemaker.t ...................... ok
+t/32-slidemaker-rakudoc.t .............. ok
+t/33-slide-layout.t .................... ok
+t/34-slide-layout-model.t .............. Dubious, test returned 2
+Failed 2/13 subtests 
+t/35-slide-integration.t ............... ok
+t/36-slide-reproducible.t .............. ok
+t/37-slide-image.t ..................... Dubious, test returned 3
+Failed 3/6 subtests 
+t/40-drawing-layout.t .................. ok
+t/41-rakuast-drawing.t ................. ok
+t/42-drawing-integration.t ............. ok
+t/43-drawing-row-labels.t .............. ok
+t/44-drawing-column-widths.t ........... ok
+
+Test Summary Report
+-------------------
+t/34-slide-layout-model.t  (Wstat: 512 Tests: 13 Failed: 2)
+  Failed tests:  6 8
+Non-zero exit status: 2
+t/37-slide-image.t  (Wstat: 768 Tests: 6 Failed: 3)
+  Failed tests:  2 3 4
+Non-zero exit status: 3
+Files=35, Tests=300,  22 wallclock secs
+Result: FAILED
