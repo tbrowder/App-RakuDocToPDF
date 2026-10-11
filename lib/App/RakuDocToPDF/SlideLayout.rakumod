@@ -222,11 +222,13 @@ sub render-slides(
         code    => $code-font,
     );
 
-    my Int $num-slides = $deck<slides>.elems;
+    my Int $total-slides = $deck<slides>.elems;
 
     my Bool $first-paragraph = True;
 
-    for 0 ..^ $num-slides -> Int $i {
+    my $slide-number = 0;
+    for 0 ..^ $total-slides -> Int $i {
+        ++$slide-number;
         my $slide = $deck<slides>[$i];
 
         my PDF::Page $page = $pdf.add-page;
@@ -397,7 +399,12 @@ sub render-slides(
                 / 'http' 's'? '://' <-[\s]>+ /,
                 :g
             ) -> $match {
-                my Str $uri = ~$match;
+                my Str $uri = (~$match).subst(/ '>' $ /, '');
+                # debug
+                #note "FOUND URL: $uri";
+                #note "  line: $text";
+                # end debug
+
 
                 # Exclude punctuation following the URL.
                 $uri ~~ s/ <[.,;:!?]>+ $ //;
@@ -423,6 +430,12 @@ sub render-slides(
                     $y + $font-size,
                 );
 
+                # debug
+                #note "LINK: $uri";
+                #note "  x=$x y=$y width=$width size=$font-size";
+                #note "  rectangle={@Rect.join(', ')}";
+                # end debug
+
                 my @Border = 0, 0, 0;
 
                 my PDF::Action::URI $action = $pdf.action: :$uri;
@@ -435,7 +448,6 @@ sub render-slides(
                 );
             }
         }
-        # debug
 
         for @lines -> %line {
             next unless (%line<type> // '') eq 'image';
@@ -493,9 +505,48 @@ sub render-slides(
                     :$height;
             }
         }
+
+        draw-slide-number(
+            $page,
+            $slide-number,
+            $total-slides,
+            $body-font,
+            $SLIDE-WIDTH,
+        );
     }
 
     $pdf.save-as: $output.Str, :!info;
 
     return $output;
+}
+
+sub draw-slide-number(
+    $page,
+    Int:D $slide-number,
+    Int:D $total-slides,
+    $font,
+    Numeric:D $slide-width
+    --> Nil
+) {
+    my Str $label = "$slide-number of $total-slides";
+    my Numeric $font-size = 10;
+
+    my Numeric $text-width = $font.stringwidth(
+        $label,
+        $font-size
+    );
+
+    my Numeric $x = $slide-width - 24 - $text-width;
+    my Numeric $y = 18;
+
+    $page.graphics: {
+        .text: {
+            .font = $font, $font-size;
+            .FillColor = :DeviceRGB[0.35, 0.35, 0.35];
+            .text-position = $x, $y;
+            .say: $label;
+        }
+    }
+
+    Nil
 }

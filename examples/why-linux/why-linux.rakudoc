@@ -20,48 +20,73 @@ L<https://Raku.org>
 
 =item Retired from USAF in 1987 and ManTech in 2017
 
-=item Have had a passion for computers since my days as a card-punching Algol- and Fortran-programming cadet at the U.S. Air Force Academy.
+=item Have had a passion for computers since my days as a
+card-punching Algol- and Fortran-programming cadet at the U.S. Air
+Force Academy.
 
-=item After retirement from the USAF, I earned an MS in Engineering Mechanics from Clemson University, and have been employed otherwise as a vulnerability analyst, program manager, computer network system administrator for mixed Windows and Unix/Linux networks, and software engineer.
+=item After retirement from the USAF, I earned an MS in Engineering
+Mechanics from Clemson University, and have been employed otherwise as
+a vulnerability analyst, program manager, computer network system
+administrator for mixed Windows and Unix/Linux networks, and software
+engineer.
 
 =slide
 =head1 Background
 
-=item My interests include Raku (formerly known as Perl 6), PostScript, PDF, and C++ programming, and the whole world of Linux and Free and Open Source Freeware in General.
+=item My interests include Raku (formerly known as Perl 6),
+PostScript, PDF, and C++ programming, and the whole world of Linux and
+Free and Open Source Freeware in General.
 
 =item I am not a windows expert, but I am pretty computer savvy.
 
-=item Most of what I will say is opinionated, but based on many years of professional experience in the digital world.
+=item Most of what I will say is opinionated, but based on many years
+of professional experience in the digital world.
 
 =slide
 =head1 Hypothesis
 
-=item Young people interested in careers involved with science, mathematics, engineering, art, music, or almost any technical field should be introduced to Linux.
+=item Young people interested in careers involved with science,
+mathematics, engineering, art, music, or almost any technical field
+should be introduced to Linux.
 
-=item Computers running Linux come loaded with powerful Free and Open Source Software (FOSS).
+=item Computers running Linux come loaded with powerful Free and Open
+Source Software (FOSS).
 
-=item If a Linux system is not available, they should still be introduced to FOSS on Windows or Mac computers.
+=item If a Linux system is not available, they should still be
+introduced to FOSS on Windows or Mac computers.
 
 =slide
 =head1 What is Linux?
 
-=item More formally known as GNU/Linux, it’s a free operating system (OS) invented by Linus Torvald to provide a UNIX-like system with all the standard command-line and graphics tools that accompany such a system.
+=item More formally known as GNU/Linux, it’s a free operating system
+(OS) invented by Linus Torvald to provide a UNIX-like system with all
+the standard command-line and graphics tools that accompany such a
+system.
 
-=item Linux, rather than Windows or Mac, provides much of the behind-the-scenes cloud computing in data centers and high-performance computing facilities. It (or forks of it) also powers the Android, the Chromebook, and much of the Internet of Things.
+=item Linux, rather than Windows or Mac, provides much of the
+behind-the-scenes cloud computing in data centers and high-performance
+computing facilities. It (or forks of it) also powers the Android, the
+Chromebook, and much of the Internet of Things.
 
 =slide
 =head1 What is Linux? (cont.)
 
-=item For a more detailed look at Linux compared to other OSs, see this link: L<https://www.lifewire.com/what-is-linux-2201940>. Note there is a lot of other tecnical information there, too.
+=item For a more detailed look at Linux compared to other OSs, see
+this link: L<https://training.linuxfoundation.org/?utm_source=google&utm_medium=paid-search&utm_campaign=24q2-evergreen-lf_training&utm_term=tnc-na-search-lf-brand-eg&utm_content=tnc-na-search-lf-brand-eg-rsa&gad_source=1&gad_campaignid=21372675077&gbraid=0AAAAAD2R-lr7UX4IQyUzO2xPvXkTj6iv9&gclid=Cj0KCQjwxKfWBhDkARIsAMKwkNZK1PZK-Xpqwxov4NVUVRd7xOUZ4UcBKrlSq0USXh2wJLW5Hu7CUdUaAn3AEALw_wcB>.
 
 =slide
 =head1 Why Linux?
 
-=item The commmand-line environment (equivalent to the Power Shell window on Windows) provides the user with almost complete freedom to automate tasks typical in research or other work in technical fields.
+=item The commmand-line environment (equivalent to the Power Shell
+window on Windows) provides the user with almost complete freedom to
+automate tasks typical in research or other work in technical fields.
 
-=item Linux also gives the user much greater control over what happens and doesn’t happen on his or her computer.
+=item Linux also gives the user much greater control over what happens
+and doesn’t happen on his or her computer.
 
-=item As a bonus, Linux comes with thousands of free applications in categories like office suites, publishing, graphics, CAD, FEA, education, science, mathematics, music, art, and many others,
+=item As a bonus, Linux comes with thousands of free applications in
+categories like office suites, publishing, graphics, CAD, FEA,
+education, science, mathematics, music, art, and many others,
 
 =slide
 =head1 Linux vs. Windows: Windows
@@ -97,16 +122,17 @@ Linux:
 
 =item Performs upgrades only if you want it to
 
-=item Is unparalleled for the scientist or engineer: a powerful, “programmable calculator"
+=item Is unparalleled for the scientist or engineer: a powerful,
+“programmable calculator"
 
 =slide
 =head1 Linux vs. Windows: Other views
 
 Other opinions:
 
-=item L<https://www.popsci.com/switch-to-linux-operating-system>
+=item L<https://ubuntu.com/desktop/docs/en/latest/tutorial/try-ubuntu-desktop/>
 
-=item L<https://www.makeuseof.com/tag/linux-beginners-guide>
+=item L<https://training.linuxfoundation.org/training/introduction-to-linux/>
 
 =slide
 =head1 Linux: Introduction
@@ -154,9 +180,12 @@ Best choice
 =slide
 =head1 Linux comes in many flavors
 
-A Linux system comes packaged in many distributions (distros) such as Debian (my choice), Ubuntu (most popular), Linux Mint, and many others
+A Linux system comes packaged in many distributions (distros) such as
+Debian (my choice), Ubuntu (most popular), Linux Mint, and many others
 
-See L<https://distrowatch.com> for lots of information about popularity, download statistics, and other stats on hundreds of distros.
+See L<https://distrowatch.com> for lots of information about
+popularity, download statistics, and other stats on hundreds of
+distros.
 
 =slide
 =head1 Linux comes in many flavors (cont.)
@@ -168,8 +197,10 @@ My Linux friends think Linux Mint is one of the best distros for beginners. I pr
 =slide
 =head1 Linux help?
 
-There is practically an infinite amount of Linux resources to be found on the Internet.
+There is practically an infinite amount of Linux resources to be found
+on the Internet.
 
-I am usually available to help small groups at a library, local church, Gulf Breeze Senior Center, or other public location.
+I am usually available to help small groups at a library, local
+church, Gulf Breeze Senior Center, or other public location.
 
 =end pod

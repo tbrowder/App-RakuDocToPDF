@@ -1,5 +1,13 @@
-Missing TITLE and SUBTITLE
+Fix links to working ones that make sense.
 
-use RakuAST
+SLIDE 6:
+BAD:
+tecnical
+https://www.lifewire.com/what-is-linux-2201940>
 
+slide 10:
+BAD:
+https://www.popsci.com/switch-to-linux-operating-system>
 
+BAD:
+https://www.makeuseof.com/tag/linux-beginners-guide>
