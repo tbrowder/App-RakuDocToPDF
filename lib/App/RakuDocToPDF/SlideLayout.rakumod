@@ -550,3 +550,35 @@ sub draw-slide-number(
 
     Nil
 }
+
+sub extract-rakudoc-link(
+    Str:D $source
+    --> Hash
+) {
+    my $match = $source.match(
+        /^ 'L<' (.*?) '>' $/
+    );
+
+    return {} unless $match;
+
+    my Str $contents = ~$match[0];
+    my @parts = $contents.split('|', 2);
+
+    my Str $text;
+    my Str $target;
+
+    if @parts.elems == 2 {
+        $text = @parts[0];
+        $target = @parts[1];
+    }
+    else {
+        $text = $contents;
+        $target = $contents;
+    }
+
+    return {
+        type   => 'link',
+        text   => $text,
+        target => $target,
+    };
+}

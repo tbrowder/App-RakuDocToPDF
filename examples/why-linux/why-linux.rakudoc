@@ -1,4 +1,4 @@
-=begin pod
+
 
 =TITLE Why Linux?
 
@@ -18,7 +18,7 @@ L<https://Raku.org>
 =slide
 =head1 Background
 
-=item Retired from USAF in 1987 and ManTech in 2017
+=item Retired from USAF in 1987 and ManTech Corp.min 2017
 
 =item Have had a passion for computers since my days as a
 card-punching Algol- and Fortran-programming cadet at the U.S. Air
@@ -50,7 +50,8 @@ mathematics, engineering, art, music, or almost any technical field
 should be introduced to Linux.
 
 =item Computers running Linux come loaded with powerful Free and Open
-Source Software (FOSS).
+Source Software (FOSS). See the FOSS site at L<https://gnu.org>. 
+
 
 =item If a Linux system is not available, they should still be
 introduced to FOSS on Windows or Mac computers.
@@ -61,7 +62,8 @@ introduced to FOSS on Windows or Mac computers.
 =item More formally known as GNU/Linux, it’s a free operating system
 (OS) invented by Linus Torvalds to provide a UNIX-like system with all
 the standard command-line and graphics tools that accompany such a
-system.
+system.  See More about GNU and the Free Software Foundation at
+L<https://gnu.org>.
 
 =item Linux, rather than Windows or Mac, provides much of the
 behind-the-scenes cloud computing in data centers and high-performance
@@ -72,7 +74,8 @@ Chromebook, and much of the Internet of Things.
 =head1 What is Linux? (cont.)
 
 =item For a more detailed look at Linux compared to other OSs, see
-this link: L<https://training.linuxfoundation.org/?utm_source=google&utm_medium=paid-search&utm_campaign=24q2-evergreen-lf_training&utm_term=tnc-na-search-lf-brand-eg&utm_content=tnc-na-search-lf-brand-eg-rsa&gad_source=1&gad_campaignid=21372675077&gbraid=0AAAAAD2R-lr7UX4IQyUzO2xPvXkTj6iv9&gclid=Cj0KCQjwxKfWBhDkARIsAMKwkNZK1PZK-Xpqwxov4NVUVRd7xOUZ4UcBKrlSq0USXh2wJLW5Hu7CUdUaAn3AEALw_wcB>.
+this link: L<https://linux.com>.
+
 
 =slide
 =head1 Why Linux?
