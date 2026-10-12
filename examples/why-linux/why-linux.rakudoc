@@ -1,4 +1,4 @@
-
+=begin pod
 
 =TITLE Why Linux?
 
@@ -13,7 +13,7 @@ Raku Computer Language Core Developer
 
 L<https://Raku.org>
 
-2026-10-09
+2026-10-12
 
 =slide
 =head1 Background
